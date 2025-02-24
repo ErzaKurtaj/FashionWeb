@@ -1,0 +1,666 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+}
+
+header {
+  background-color: white;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.user-options {
+  display: flex;
+  align-items: center;
+}
+
+.subscribe-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.sign-in {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.hero {
+  position: relative;
+}
+
+.hero img {
+  width: 50%;
+  height: 90%;
+  display: block;
+  max-height: 100%; /* Adjust based on the desired height */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+
+.overlay-text h1 {
+  margin: 0;
+  font-size: 48px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.newsletter {
+  width: 30%;
+  background-color: #f8f8f8;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.newsletter p {
+  font-weight: bold;
+}
+
+.newsletter button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+article {
+  width: 65%;
+}
+
+article h2 {
+  font-size: 24px;
+}
+
+.user-options {
+  display: flex;
+  align-items: center;
+}
+
+.user-options i {
+  font-size: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+/* styles.css */
+.show {
+  display: block;
+}
+
+/* Cart dropdown styles */
+.cart-empty {
+  text-align: center;
+}
+
+.cart-empty i {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.cart-empty p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.cart-empty a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+/* Search Form Styles */
+.search-form {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.search-form input {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-form button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-left: none;
+  background-color: #ddd;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.search-form button i {
+  color: #555;
+}
+
+.hero-section {
+
+  padding: 100px 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content h1 {
+  margin-top: 0;
+  font-size: 3em;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.hero-content p {
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+.team-section {
+  padding: 60px 20px;
+  background-color: #fff;
+}
+
+.team-section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #a9aae6; 
+}
+
+.team-members {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.team-member {
+  text-align: center;
+  margin-bottom: 20px;
+  flex-basis: 30%;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.team-member:hover {
+  transform: translateY(-10px);
+}
+
+.team-member img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.team-member img:hover {
+  transform: scale(1.1);
+}
+
+.team-member h3 {
+  margin-top: 10px;
+  font-size: 1.5em;
+  color: #333;
+  font-weight: 600;
+}
+
+.team-member p {
+  color: #777;
+  font-size: 1em;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #222;
+  color: white;
+  padding: 40px 20px;
+  text-align: left;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+  margin: 20px;
+}
+
+.footer-section h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.footer-section p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-section ul li a:hover {
+  text-decoration: underline;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #ff4081;
+}
+.footer-bottom {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 14px;
+}
+.newsletter-form {
+  display: flex;
+  margin-top: 10px;
+}
+
+.newsletter-form input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  width: 70%;
+}
+
+.newsletter-form button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #a9aae6; 
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+  }
+
+.newsletter-form button:hover {
+  background-color: #e63775;
+}
+
+.hero {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+.about-us-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.about-us-content {
+  background: #e6e6f0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.about-us-content h1 {
+  font-size: 3em;
+  margin: 0;
+}
+
+.about-us-content p {
+  font-size: 1.2em;
+}
+
+.jobs-available {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.jobs-available img {
+  width: 400px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.jobs-available span {
+  font-size: 1.5em;
+}
+
+.about-us{
+  padding: 50px 20px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.about-us h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.about-us p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.buying-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 50px 20px;
+  background-color: #f4f4f4;
+}
+
+.buying-section .image-container {
+  flex: 1;
+}
+
+.buying-section .image-container img {
+  width: 100%;
+  height: 600px;
+  border-radius: 10px;
+}
+
+.buying-section .buying-text {
+  flex: 1;
+  text-align: left;
+}
+
+.buying-section .buying-text h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.buying-section .buying-text p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+.employee-section {
+  max-width: 800px;
+  margin: 50px auto;
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.employee-section h1 {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+.employee-profile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.employee-profile img {
+  width: 280px;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.employee-info {
+  max-width: 500px;
+  text-align: left;
+}
+
+.employee-info h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.employee-info p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.employee-info strong {
+  display: block;
+  margin-top: 20px;
+}
+
+/* Dropdown styles */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+  width: 300px;
+}
+
+.dropdown-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  text-align: center;
+}
+
+.dropdown-content label {
+  font-size: 14px;
+  margin: 10px 0 5px;
+}
+
+.dropdown-content input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.dropdown-content .password-container {
+  position: relative;
+}
+
+.dropdown-content .password-container input {
+  width: calc(100% - 30px);
+}
+
+.dropdown-content .password-container i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.dropdown-content button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dropdown-content a {
+  text-align: center;
+  margin-top: 10px;
+  color: black;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.dropdown-content p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.dropdown-content p a {
+  text-decoration: none;
+  color: blue;
+}
+/* styles.css */
+.show {
+  display: block;
+}
+
+/* Cart dropdown styles */
+.cart-empty {
+  text-align: center;
+}
+
+.cart-empty i {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.cart-empty p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.cart-empty a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+/* Search Form Styles */
+.search-form {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.search-form input {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-form button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-left: none;
+  background-color: #ddd;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.search-form button i {
+  color: #555;
+}
