@@ -249,22 +249,73 @@ article h2 {
   font-size: 16px;
 }
 
+/* === Hamburger Button === */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 5px;
+  color: #333;
+  margin-left: 10px;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+
   .nav-bar {
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    flex: 1;
+    order: 1;
+  }
+
+  .user-options {
+    order: 2;
+    flex-shrink: 0;
+  }
+
+  .search-form {
+    display: none;
+  }
+
+  nav {
+    display: none;
+    order: 3;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #eee;
+  }
+
+  nav.nav-open {
+    display: block;
+  }
+
+  nav ul {
     flex-direction: column;
+    padding: 5px 0;
   }
 
-  .nav-bar nav {
-    margin-top: 10px;
+  nav ul li {
+    margin: 0;
+    border-bottom: 1px solid #f0f0f0;
   }
 
-  .nav-bar nav ul {
-    flex-direction: column;
+  nav ul li a {
+    display: block;
+    padding: 12px 20px;
   }
 
-  .nav-bar nav ul li {
-    margin-bottom: 10px;
+  .dropdown-content {
+    width: calc(100vw - 40px);
+    max-width: 300px;
+    right: 10px;
   }
 
   .content {
@@ -280,6 +331,12 @@ article h2 {
     width: 100%;
   }
 
+  .course img {
+    width: 100%;
+    max-width: 280px;
+    height: 200px;
+  }
+
   .footer-container {
     flex-direction: column;
     align-items: center;
@@ -288,6 +345,22 @@ article h2 {
   .footer-section {
     width: 100%;
     margin-bottom: 20px;
+  }
+
+  .modal {
+    width: 90%;
+    margin: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+    border-radius: 5px;
+    box-sizing: border-box;
   }
 }
 

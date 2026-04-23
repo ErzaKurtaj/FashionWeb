@@ -172,6 +172,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.getElementById('main-nav');
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', function(event) {
+            event.stopPropagation();
+            mainNav.classList.toggle('nav-open');
+        });
+        window.addEventListener('click', function() {
+            mainNav.classList.remove('nav-open');
+        });
+        mainNav.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
     const learnMoreButtons = document.querySelectorAll('.btn-learn-more');
     const modalOverlay = document.querySelector('.modal-overlay');
     const modalClose = document.querySelector('.modal-close');
