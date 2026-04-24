@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
       const name = 'BLACK SHIRT';
       const price = '34.95 EUR';
-      const image = '/assets/images/black.jpg';
+    const image = '../assets/images/black.jpg';
       addToCart(name, price, image, selectedSize);
   });
 
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
           return;
       }
       incrementItem();
-      addToCart('BLACK SHIRT', '43.95 EUR', '/assets/images/black.jpg', selectedSize);
+    addToCart('BLACK SHIRT', '43.95 EUR', '../assets/images/black.jpg', selectedSize);
   });
 
   document.querySelector('.minus-btn').addEventListener('click', function() {

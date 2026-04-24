@@ -381,7 +381,7 @@ nav ul li a.active::after {
    PAGE HEADER
 ───────────────────────────────────── */
 .page-header {
-  background: url("/assets/images/blacky.png") center/cover no-repeat;
+  background: url("../assets/images/blacky.png") center/cover no-repeat;
   height: 420px;
   display: flex;
   flex-direction: column;
