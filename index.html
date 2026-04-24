@@ -42,49 +42,68 @@
       </div>
     </header>
 
-  <!-- Search overlay -->
-  <div id="search-overlay" class="search-overlay" role="dialog" aria-modal="true" aria-label="Search">
-    <div class="search-overlay-panel">
-
-      <div class="search-overlay-top">
-        <div class="search-field-wrap">
-          <span class="search-eyebrow">Search</span>
-          <div class="search-field">
-            <input type="text" id="search-overlay-input" class="search-overlay-input"
-              placeholder="What are you looking for?"
-              autocomplete="off" spellcheck="false" aria-label="Search products">
-            <button class="search-overlay-clear" id="search-overlay-clear" aria-label="Clear" hidden>
-              <i class="fas fa-times"></i>
-            </button>
+    <!-- Search overlay -->
+    <div
+      id="search-overlay"
+      class="search-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search"
+    >
+      <div class="search-overlay-panel">
+        <div class="search-overlay-top">
+          <div class="search-field-wrap">
+            <span class="search-eyebrow">Search</span>
+            <div class="search-field">
+              <input
+                type="text"
+                id="search-overlay-input"
+                class="search-overlay-input"
+                placeholder="What are you looking for?"
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="Search products"
+              />
+              <button
+                class="search-overlay-clear"
+                id="search-overlay-clear"
+                aria-label="Clear"
+                hidden
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="search-field-bar"></div>
           </div>
-          <div class="search-field-bar"></div>
+          <button
+            class="search-overlay-close"
+            id="search-close"
+            aria-label="Close search"
+          >
+            <span>Close</span>
+            <i class="fas fa-times"></i>
+          </button>
         </div>
-        <button class="search-overlay-close" id="search-close" aria-label="Close search">
-          <span>Close</span>
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
 
-      <div class="search-suggestions" id="search-suggestions">
-        <span class="search-suggestions-label">Trending</span>
-        <div class="search-suggestion-tags">
-          <button class="search-tag" data-tag="dress">Dress</button>
-          <button class="search-tag" data-tag="blazer">Blazer</button>
-          <button class="search-tag" data-tag="heels">Heels</button>
-          <button class="search-tag" data-tag="wedding">Wedding</button>
-          <button class="search-tag" data-tag="elegant">Elegant</button>
-          <button class="search-tag" data-tag="old money">Old Money</button>
+        <div class="search-suggestions" id="search-suggestions">
+          <span class="search-suggestions-label">Trending</span>
+          <div class="search-suggestion-tags">
+            <button class="search-tag" data-tag="dress">Dress</button>
+            <button class="search-tag" data-tag="blazer">Blazer</button>
+            <button class="search-tag" data-tag="heels">Heels</button>
+            <button class="search-tag" data-tag="wedding">Wedding</button>
+            <button class="search-tag" data-tag="elegant">Elegant</button>
+            <button class="search-tag" data-tag="old money">Old Money</button>
+          </div>
+        </div>
+
+        <div class="search-results-wrap">
+          <div class="search-results-meta" id="search-results-meta"></div>
+          <div id="search-results" class="search-results-grid"></div>
         </div>
       </div>
-
-      <div class="search-results-wrap">
-        <div class="search-results-meta" id="search-results-meta"></div>
-        <div id="search-results" class="search-results-grid"></div>
-      </div>
-
+      <div class="search-overlay-backdrop"></div>
     </div>
-    <div class="search-overlay-backdrop"></div>
-  </div>
 
     <div id="user-dropdown" class="dropdown-content">
       <form>
@@ -113,7 +132,11 @@
     <main>
       <section class="hero">
         <div class="hero-content">
-            <img src="assets/images/finalshot.png" alt="Fashion" class="hero-image" />
+          <img
+            src="assets/images/finalshot.png"
+            alt="Fashion"
+            class="hero-image"
+          />
         </div>
         <div class="overlay-text">
           <h1>FASHION</h1>
@@ -132,7 +155,9 @@
               Explore our collection of stylish dresses perfect for any
               occasion. Comfort meets elegance.
             </p>
-            <button onclick="location.href = '/pages/clothes.html'">View More</button>
+            <button onclick="location.href = '/pages/clothes.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="2">
             <img src="assets/images/oldmoney.jpg" alt="Old Money Style" />
@@ -141,7 +166,9 @@
               Embrace the classic and sophisticated "Old Money" aesthetic with
               timeless, refined pieces.
             </p>
-            <button onclick="location.href = '/pages/clothes.html'">View More</button>
+            <button onclick="location.href = '/pages/clothes.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="3">
             <img src="assets/images/chic.jpg" alt="Elegant Clothes" />
@@ -150,7 +177,9 @@
               Refined and chic options that add sophistication to your look, for
               both professional and social settings.
             </p>
-            <button onclick="location.href = '/pages/clothes.html'">View More</button>
+            <button onclick="location.href = '/pages/clothes.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="4">
             <img src="assets/images/simple.jpg" alt="Simple Clothes" />
@@ -159,7 +188,9 @@
               Minimalist designs that are versatile and easy to style for any
               occasion. Less is more.
             </p>
-            <button onclick="location.href = '/pages/clothes.html'">View More</button>
+            <button onclick="location.href = '/pages/clothes.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="5">
             <img src="assets/images/wedding.jpg" alt="Wedding Clothes" />
@@ -168,7 +199,9 @@
               Make your special day memorable with our exquisite bridal and
               guest attire collection.
             </p>
-            <button onclick="location.href = '/pages/clothes.html'">View More</button>
+            <button onclick="location.href = '/pages/clothes.html'">
+              View More
+            </button>
           </div>
         </div>
       </section>
@@ -184,7 +217,9 @@
               Add a pop of color with these stunning purple heels. Perfect for a
               bold fashion statement.
             </p>
-            <button onclick="location.href = '/pages/training.html'">View More</button>
+            <button onclick="location.href = '/pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="2">
             <img src="assets/images/red.jpg" alt="Red Heels" />
@@ -193,7 +228,9 @@
               Make a striking impression with our red heels — drama and elegance
               in every step.
             </p>
-            <button onclick="location.href = '/pages/training.html'">View More</button>
+            <button onclick="location.href = '/pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="3">
             <img src="assets/images/LV.jpg" alt="Black Heels" />
@@ -202,7 +239,9 @@
               A timeless classic. Our black heels feature elegant, versatile
               designs for any occasion.
             </p>
-            <button onclick="location.href = '/pages/training.html'">View More</button>
+            <button onclick="location.href = '/pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="4">
             <img src="assets/images/SL.jpg" alt="Brown Heels" />
@@ -211,7 +250,9 @@
               Sophisticated and stylish — perfect for an understated yet chic
               look.
             </p>
-            <button onclick="location.href = '/pages/training.html'">View More</button>
+            <button onclick="location.href = '/pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="5">
             <img src="assets/images/blue.jpg" alt="Blue Heels" />
@@ -220,7 +261,9 @@
               Stand out with our unique blue heels — a touch of uniqueness to
               any ensemble.
             </p>
-            <button onclick="location.href = '/pages/training.html'">View More</button>
+            <button onclick="location.href = '/pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="6">
             <img src="assets/images/result.jpg" alt="Drawing" />
@@ -229,7 +272,9 @@
               Discover the art of shoe design with our exclusive concept
               drawings and creative process.
             </p>
-            <button onclick="location.href = '/pages/training.html'">View More</button>
+            <button onclick="location.href = '/pages/training.html'">
+              View More
+            </button>
           </div>
         </div>
       </section>
