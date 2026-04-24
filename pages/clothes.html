@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passionis — Shopping</title>
+    <link rel="stylesheet" href="/assets/css/clothes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="/assets/js/main.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav-bar">
+      <div class="logo">PASSIONIS</div>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="/index.html">FASHION</a></li>
+          <li><a href="/pages/clothes.html">SHOPPING</a></li>
+          <li><a href="/pages/training.html">TRAINING COURSES</a></li>
+          <li><a href="/pages/about.html">ABOUT US</a></li>
+        </ul>
+      </nav>
+      <div class="user-options">
+        <form class="search-form" action="#" method="GET">
+          <input type="text" name="search" placeholder="Search...">
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <i class="fa-solid fa-user" id="user-icon"></i>
+        <i class="fas fa-shopping-cart" id="cart-icon"></i>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search overlay -->
+  <div id="search-overlay" class="search-overlay" role="dialog" aria-modal="true" aria-label="Search results">
+    <div class="search-overlay-panel">
+      <div class="search-overlay-header">
+        <span id="search-query-label">Results for "<em id="search-query-text"></em>"</span>
+        <button id="search-close" class="search-close-btn" aria-label="Close search"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="search-results" class="search-results-grid"></div>
+    </div>
+    <div class="search-overlay-backdrop"></div>
+  </div>
+
+  <div id="user-dropdown" class="dropdown-content">
+    <form>
+      <h3>MY ACCOUNT</h3>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password</label>
+      <div class="password-container">
+        <input type="password" id="password" name="password" required>
+        <i class="fa-solid fa-eye"></i>
+      </div>
+      <button type="submit">Sign in</button>
+      <a href="#">Forgotten Your Password?</a>
+      <p>Don't have an account? <a href="#">Register now</a></p>
+    </form>
+  </div>
+
+  <div id="cart-dropdown" class="dropdown-content">
+    <div class="cart-empty">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <p>Your Shopping Bag is empty</p>
+      <a href="#">Shop What's New</a>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-header">
+      <span class="section-label">Collection 2025</span>
+      <h1>SHOPPING</h1>
+    </div>
+
+    <section class="items-section">
+      <h2>TRENDY DRESSES</h2>
+      <div class="items-container">
+        <div class="item reveal" data-delay="1">
+          <div class="item-img-wrap">
+            <img src="/assets/images/set.jpg" alt="Long Skirt and Top">
+          </div>
+          <div class="item-info">
+            <h3>LONG SKIRT AND TOP</h3>
+            <p>39.95 EUR</p>
+            <button onclick="location.href='/pages/details.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="2">
+          <div class="item-img-wrap">
+            <img src="/assets/images/cute.jpg" alt="Cute Pink Dress">
+          </div>
+          <div class="item-info">
+            <h3>CUTE PINK DRESS</h3>
+            <p>25.95 EUR</p>
+            <button onclick="location.href='/pages/d2.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="3">
+          <div class="item-img-wrap">
+            <img src="/assets/images/mint.jpg" alt="Mint Dress & Blazer">
+          </div>
+          <div class="item-info">
+            <h3>MINT DRESS &amp; BLAZER</h3>
+            <p>87.95 EUR</p>
+            <button onclick="location.href='/pages/d3.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="4">
+          <div class="item-img-wrap">
+            <img src="/assets/images/long.jpg" alt="Long Brown Dress">
+          </div>
+          <div class="item-info">
+            <h3>LONG BROWN DRESS</h3>
+            <p>25.95 EUR</p>
+            <button onclick="location.href='/pages/d4.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="5">
+          <div class="item-img-wrap">
+            <img src="/assets/images/cutest.jpg" alt="Satin Black Dress">
+          </div>
+          <div class="item-info">
+            <h3>SATIN BLACK DRESS</h3>
+            <p>35.95 EUR</p>
+            <button onclick="location.href='/pages/d5.html'">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="items-section">
+      <h2>OLD MONEY STYLE</h2>
+      <div class="items-container">
+        <div class="item reveal" data-delay="1">
+          <div class="item-img-wrap">
+            <img src="/assets/images/white.jpg" alt="White Pants">
+          </div>
+          <div class="item-info">
+            <h3>WHITE PANTS</h3>
+            <p>45.95 EUR</p>
+            <button onclick="location.href='/pages/d6.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="2">
+          <div class="item-img-wrap">
+            <img src="/assets/images/beige.jpg" alt="Brown Shirt">
+          </div>
+          <div class="item-info">
+            <h3>BROWN SHIRT</h3>
+            <p>25.95 EUR</p>
+            <button onclick="location.href='/pages/d7.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="3">
+          <div class="item-img-wrap">
+            <img src="/assets/images/yellow.jpg" alt="Yellow Dress">
+          </div>
+          <div class="item-info">
+            <h3>YELLOW DRESS</h3>
+            <p>27.95 EUR</p>
+            <button onclick="location.href='/pages/d8.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="4">
+          <div class="item-img-wrap">
+            <img src="/assets/images/best.jpg" alt="Shirt & Pants">
+          </div>
+          <div class="item-info">
+            <h3>SHIRT &amp; PANTS</h3>
+            <p>55.95 EUR</p>
+            <button onclick="location.href='/pages/d9.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="5">
+          <div class="item-img-wrap">
+            <img src="/assets/images/black.jpg" alt="Black Shirt">
+          </div>
+          <div class="item-info">
+            <h3>BLACK SHIRT</h3>
+            <p>34.95 EUR</p>
+            <button onclick="location.href='/pages/d10.html'">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="items-section">
+      <h2>ELEGANT CLOTHES</h2>
+      <div class="items-container">
+        <div class="item reveal" data-delay="1">
+          <div class="item-img-wrap">
+            <img src="/assets/images/el.jpg" alt="Mini Skirt & T-Shirt">
+          </div>
+          <div class="item-info">
+            <h3>MINI SKIRT &amp; T-SHIRT</h3>
+            <p>45.95 EUR</p>
+            <button onclick="location.href='/pages/d11.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="2">
+          <div class="item-img-wrap">
+            <img src="/assets/images/blazer.jpg" alt="Oversize Blazer">
+          </div>
+          <div class="item-info">
+            <h3>OVERSIZE BLAZER</h3>
+            <p>39.95 EUR</p>
+            <button onclick="location.href='/pages/d12.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="3">
+          <div class="item-img-wrap">
+            <img src="/assets/images/STREET.jpg" alt="Blazer & Skirt">
+          </div>
+          <div class="item-info">
+            <h3>BLAZER &amp; SKIRT</h3>
+            <p>65.95 EUR</p>
+            <button onclick="location.href='/pages/d13.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="4">
+          <div class="item-img-wrap">
+            <img src="/assets/images/autumn.jpg" alt="Sweater">
+          </div>
+          <div class="item-info">
+            <h3>SWEATER</h3>
+            <p>25.95 EUR</p>
+            <button onclick="location.href='/pages/d14.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="5">
+          <div class="item-img-wrap">
+            <img src="/assets/images/yello.jpg" alt="Mini Dress">
+          </div>
+          <div class="item-info">
+            <h3>MINI DRESS</h3>
+            <p>27.95 EUR</p>
+            <button onclick="location.href='/pages/d15.html'">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="items-section">
+      <h2>SIMPLE OUTFITS</h2>
+      <div class="items-container">
+        <div class="item reveal" data-delay="1">
+          <div class="item-img-wrap">
+            <img src="/assets/images/jacket.jpg" alt="Oversize Jacket">
+          </div>
+          <div class="item-info">
+            <h3>OVERSIZE JACKET</h3>
+            <p>42.95 EUR</p>
+            <button onclick="location.href='/pages/d16.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="2">
+          <div class="item-img-wrap">
+            <img src="/assets/images/jeans.jpg" alt="White Pants">
+          </div>
+          <div class="item-info">
+            <h3>WHITE PANTS</h3>
+            <p>39.95 EUR</p>
+            <button onclick="location.href='/pages/d17.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="3">
+          <div class="item-img-wrap">
+            <img src="/assets/images/tshirt.jpg" alt="Basic T-Shirt">
+          </div>
+          <div class="item-info">
+            <h3>BASIC T-SHIRT</h3>
+            <p>17.95 EUR</p>
+            <button onclick="location.href='/pages/d18.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="4">
+          <div class="item-img-wrap">
+            <img src="/assets/images/cargo.jpg" alt="Oversize Cargo">
+          </div>
+          <div class="item-info">
+            <h3>OVERSIZE CARGO</h3>
+            <p>25.95 EUR</p>
+            <button onclick="location.href='/pages/d19.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="5">
+          <div class="item-img-wrap">
+            <img src="/assets/images/sweater.jpg" alt="Neck Sweater">
+          </div>
+          <div class="item-info">
+            <h3>NECK SWEATER</h3>
+            <p>27.95 EUR</p>
+            <button onclick="location.href='/pages/d20.html'">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="items-section">
+      <h2>WEDDING CLOTHES</h2>
+      <div class="items-container">
+        <div class="item reveal" data-delay="1">
+          <div class="item-img-wrap">
+            <img src="/assets/images/whitedress.jpg" alt="White Long Dress">
+          </div>
+          <div class="item-info">
+            <h3>WHITE LONG DRESS</h3>
+            <p>45.95 EUR</p>
+            <button onclick="location.href='/pages/d21.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="2">
+          <div class="item-img-wrap">
+            <img src="/assets/images/orange.jpg" alt="Cropped Dress">
+          </div>
+          <div class="item-info">
+            <h3>CROPPED DRESS</h3>
+            <p>39.95 EUR</p>
+            <button onclick="location.href='/pages/d22.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="3">
+          <div class="item-img-wrap">
+            <img src="/assets/images/short.jpg" alt="Long Wavy Dress">
+          </div>
+          <div class="item-info">
+            <h3>LONG WAVY DRESS</h3>
+            <p>25.95 EUR</p>
+            <button onclick="location.href='/pages/d23.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="4">
+          <div class="item-img-wrap">
+            <img src="/assets/images/green.jpg" alt="Green Dress">
+          </div>
+          <div class="item-info">
+            <h3>GREEN DRESS</h3>
+            <p>27.95 EUR</p>
+            <button onclick="location.href='/pages/d24.html'">BUY NOW</button>
+          </div>
+        </div>
+        <div class="item reveal" data-delay="5">
+          <div class="item-img-wrap">
+            <img src="/assets/images/navy.jpg" alt="Navy Dress">
+          </div>
+          <div class="item-info">
+            <h3>NAVY DRESS</h3>
+            <p>33.95 EUR</p>
+            <button onclick="location.href='/pages/d25.html'">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>PASSIONIS is your ultimate source for fashion news, trends, and design courses. Stay chic and inspired.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/pages/about.html">About Us</a></li>
+          <li><a href="/pages/training.html">Courses</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Newsletter</h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 PASSIONIS. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

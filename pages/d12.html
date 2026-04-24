@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Page</title>
+    <link rel="stylesheet" href="/assets/css/details.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="/assets/js/m12.js"></script>
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <div class="logo">PASSIONIS</div>
+            <nav>
+                <ul>
+                    <li><a href="/index.html">FASHION</a></li>
+                    <li><a href="/pages/clothes.html">SHOPPING</a></li>
+                    <li><a href="/pages/training.html">TRAINING COURSES</a></li>
+                    <li><a href="/pages/about.html">ABOUT US</a></li>
+                </ul>
+            </nav>
+            <div class="user-options">
+                <form class="search-form" action="#" method="GET">
+                    <input type="text" name="search" placeholder="Search...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <i class="fa-solid fa-user" id="user-icon"></i>
+                <i class="fas fa-shopping-cart" id="cart-icon"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+    <div id="user-dropdown" class="dropdown-content">
+        <form>
+            <h3>MY ACCOUNT</h3>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+                <i class="fa-solid fa-eye"></i>
+            </div>
+            <button type="submit">Sign in</button>
+            <a href="#">Forgotten Your Password?</a>
+            <p>Don't have an account? <a href="#">Register now</a></p>
+        </form>
+    </div>
+    <div id="cart-dropdown" class="dropdown-content">
+        <div id="cart-items"></div>
+        <div class="cart-actions">
+            <button class="minus-btn" onclick="decrementItem()">-</button>
+            <span class="item-count">1</span>
+            <button class="plus-btn" onclick="incrementItem()">+</button>
+        </div>
+    </div>
+    </div>
+    <div class="details-container">
+        <div class="image-gallery">
+            <img src="/assets/images/blazer.jpg" alt="Dress Detail 1">
+            <div class="thumbnails">
+                <img src="/assets/images/dress-detail1.jpg" alt="Thumbnail 1">
+                <img src="/assets/images/dress-detail2.jpg" alt="Thumbnail 2">
+                <img src="/assets/images/dress-detail3.jpg" alt="Thumbnail 3">
+            </div>
+        </div>
+        <div class="details">
+            <h1>OVERSIZE BLAZER</h1>
+            <p>39.95 EUR</p>
+            <p>Designed for both comfort and style, its relaxed fit offers a modern twist on traditional tailoring. Perfect for layering over casual outfits or adding a chic touch to office attire, this versatile piece transitions seamlessly from day to evening. Embrace effortless sophistication with our oversized blazer, a must-have for every fashion-forward wardrobe</p>
+            <div class="sizes">
+                <p>COLOR: BEIGE | 3152/320</p>
+                <div class="size-options">
+                    <span onclick="selectSize(this)">XS</span>
+                    <span onclick="selectSize(this)">S</span>
+                    <span onclick="selectSize(this)">M</span>
+                    <span onclick="selectSize(this)">L</span>
+                    <span onclick="selectSize(this)">XL</span>
+                    <span onclick="selectSize(this)">XXL</span>
+                </div>
+            </div>
+            <button class="add-to-cart">ADD TO CART</button>
+        </div>
+    </div>
+</body>
+</html>

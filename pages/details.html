@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passionis — Long Skirt and Top</title>
+    <link rel="stylesheet" href="/assets/css/details.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="/assets/js/main.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="nav-bar">
+      <div class="logo">PASSIONIS</div>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="/index.html">FASHION</a></li>
+          <li><a href="/pages/clothes.html">SHOPPING</a></li>
+          <li><a href="/pages/training.html">TRAINING COURSES</a></li>
+          <li><a href="/pages/about.html">ABOUT US</a></li>
+        </ul>
+      </nav>
+      <div class="user-options">
+        <form class="search-form" action="#" method="GET">
+          <input type="text" name="search" placeholder="Search...">
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <i class="fa-solid fa-user" id="user-icon"></i>
+        <i class="fas fa-shopping-cart" id="cart-icon"></i>
+        <span id="cart-count">0</span>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search overlay -->
+  <div id="search-overlay" class="search-overlay" role="dialog" aria-modal="true" aria-label="Search results">
+    <div class="search-overlay-panel">
+      <div class="search-overlay-header">
+        <span id="search-query-label">Results for "<em id="search-query-text"></em>"</span>
+        <button id="search-close" class="search-close-btn" aria-label="Close search"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="search-results" class="search-results-grid"></div>
+    </div>
+    <div class="search-overlay-backdrop"></div>
+  </div>
+
+  <div id="user-dropdown" class="dropdown-content">
+    <form>
+      <h3>MY ACCOUNT</h3>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password</label>
+      <div class="password-container">
+        <input type="password" id="password" name="password" required>
+        <i class="fa-solid fa-eye"></i>
+      </div>
+      <button type="submit">Sign in</button>
+      <a href="#">Forgotten Your Password?</a>
+      <p>Don't have an account? <a href="#">Register now</a></p>
+    </form>
+  </div>
+
+  <div id="cart-dropdown" class="dropdown-content">
+    <div id="cart-items"></div>
+    <div class="cart-actions" style="display:flex;align-items:center;gap:0;padding:16px 0 0;">
+      <button class="qty-btn minus-btn">−</button>
+      <span class="item-count" id="quantity-display" style="width:52px;height:44px;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--c-line);border-bottom:1px solid var(--c-line);font-size:14px;">1</span>
+      <button class="qty-btn plus-btn">+</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="details-container">
+      <div class="image-gallery">
+        <img src="/assets/images/set.jpg" alt="Long Skirt and Top">
+        <div class="thumbnails">
+          <img src="/assets/images/set.jpg" alt="View 1" class="active">
+          <img src="/assets/images/dress.jpg" alt="View 2">
+          <img src="/assets/images/chic.jpg" alt="View 3">
+        </div>
+      </div>
+
+      <div class="details">
+        <p class="breadcrumb">
+          <a href="/index.html">Home</a>
+          <span>/</span>
+          <a href="/pages/clothes.html">Shopping</a>
+          <span>/</span>
+          Long Skirt and Top
+        </p>
+
+        <h1>LONG SKIRT AND TOP</h1>
+        <p class="price">39.95 EUR</p>
+        <p class="subtitle">White · Ref. 3152/320</p>
+
+        <p>This elegant long skirt and top set features a round neckline and sleeveless design, perfect for a chic and sophisticated look. The fabric is textured and pleated, adding a unique touch to the ensemble. The skirt includes a slit at the back for ease of movement, and the inner lining is colour-matched for a seamless appearance.</p>
+
+        <div class="sizes">
+          <p>Select Size</p>
+          <div class="size-options">
+            <span onclick="selectSize(this)">XS</span>
+            <span onclick="selectSize(this)">S</span>
+            <span onclick="selectSize(this)">M</span>
+            <span onclick="selectSize(this)">L</span>
+            <span onclick="selectSize(this)">XL</span>
+            <span onclick="selectSize(this)">XXL</span>
+          </div>
+        </div>
+
+        <button class="add-to-cart">ADD TO CART</button>
+        <button class="wishlist-btn"><i class="far fa-heart"></i>&nbsp; Add to Wishlist</button>
+
+        <div class="product-info">
+          <details class="info-row">
+            <summary>Product Details</summary>
+            <p>Round neckline · Sleeveless · Textured pleated fabric · Back slit · Concealed zip closure · Colour-matched inner lining. Outer: 100% Polyester. Lining: 100% Polyester.</p>
+          </details>
+          <details class="info-row">
+            <summary>Delivery &amp; Returns</summary>
+            <p>Standard delivery 3–5 working days. Express delivery available. Free returns within 30 days on all unworn items in original packaging.</p>
+          </details>
+          <details class="info-row">
+            <summary>Size Guide</summary>
+            <p>XS: 32–34 EU · S: 36–38 EU · M: 40–42 EU · L: 44–46 EU · XL: 48–50 EU · XXL: 52–54 EU. Model is 178 cm and wears size S.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>PASSIONIS is your ultimate source for fashion news, trends, and design courses. Stay chic and inspired.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/pages/about.html">About Us</a></li>
+          <li><a href="/pages/training.html">Courses</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Newsletter</h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 PASSIONIS. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
