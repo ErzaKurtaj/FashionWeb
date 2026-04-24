@@ -3,123 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Passionis</title>
+    <title>Passionis — About Us</title>
     <link rel="stylesheet" href="css/about.css">
-    <script src="main.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="nav-bar">
-            <div class="logo">PASSIONIS</div>
-            <nav id="main-nav">
-                <ul>
-                    <li><a href="index.html">FASHION</a></li>
-                    <li><a href="clothes.html">SHOPPING</a></li>
-                    <li><a href="training.html">TRAINING COURSES</a></li>
-                    <li><a href="about.html">ABOUT US</a></li>
-                </ul>
-            </nav>
-            <div class="user-options">
-                <form class="search-form" action="#" method="GET">
-                    <input type="text" name="search" placeholder="Search...">
-                    <button type="submit"><i class="fas fa-search"></i></button>
-                </form>
-                <i class="fa-solid fa-user" id="user-icon"></i>
-                <i class="fas fa-shopping-cart" id="cart-icon"></i>
-                <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-        <div id="user-dropdown" class="dropdown-content">
-            <form>
-                <h3>MY ACCOUNT</h3>
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-                <label for="password">Password</label>
-                <div class="password-container">
-                    <input type="password" id="password" name="password" required>
-                    <i class="fa-solid fa-eye"></i>
-                </div>
-                <button type="submit">Sign in</button>
-                <a href="#">Forgotten Your Password?</a>
-                <p>Don't have an account? <a href="#">Register now</a></p>
-            </form>
-        </div>
-        <div id="cart-dropdown" class="dropdown-content">
-            <div class="cart-empty">
-                <i class="fa-solid fa-bag-shopping"></i>
-                <p>Your Shopping Bag is empty</p>
-                <a href="#">Shop What's New</a>
-            </div>
-        </div>
-    </header>
+  <header>
+    <div class="nav-bar">
+      <div class="logo">PASSIONIS</div>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="index.html">FASHION</a></li>
+          <li><a href="clothes.html">SHOPPING</a></li>
+          <li><a href="training.html">TRAINING COURSES</a></li>
+          <li><a href="about.html">ABOUT US</a></li>
+        </ul>
+      </nav>
+      <div class="user-options">
+        <form class="search-form" action="#" method="GET">
+          <input type="text" name="search" placeholder="Search...">
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <i class="fa-solid fa-user" id="user-icon"></i>
+        <i class="fas fa-shopping-cart" id="cart-icon"></i>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <section class="about-us">
-        <h1>FASHION</h1>
-        <p>As online fashion platform, we follow our own path in the world of fashion pioneering in the field of fashion e-discovery. Do you want to follow it with us? Take the chance and become a part of our Fashion team!</p>
-        <div class="buying-section">
-            <div class="image-container">
-                <img src="images/work.jpg" alt="Fashion">
-            </div>
-            <div class="buying-text">
-                <h2>BUYING</h2>
-                <p>We convince customers because of our diversity. Our passionate Buying team always has the latest trends and the best styles ready for our customers. They work closely with various designers and brands to ensure our collection is diverse and appealing.</p>
-            </div>
-        </div>
+  <div id="user-dropdown" class="dropdown-content">
+    <form>
+      <h3>MY ACCOUNT</h3>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password</label>
+      <div class="password-container">
+        <input type="password" id="password" name="password" required>
+        <i class="fa-solid fa-eye"></i>
+      </div>
+      <button type="submit">Sign in</button>
+      <a href="#">Forgotten Your Password?</a>
+      <p>Don't have an account? <a href="#">Register now</a></p>
+    </form>
+  </div>
+
+  <div id="cart-dropdown" class="dropdown-content">
+    <div class="cart-empty">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <p>Your Shopping Bag is empty</p>
+      <a href="#">Shop What's New</a>
+    </div>
+  </div>
+
+  <main>
+    <section class="about-hero">
+      <div class="about-hero-content reveal">
+        <span class="section-label">Our Story</span>
+        <h1>ABOUT US</h1>
+        <p>As an online fashion platform, we follow our own path — pioneering in the field of fashion e-discovery. Join us and become part of the PASSIONIS team.</p>
+      </div>
     </section>
+
+    <section class="about-us reveal">
+      <span class="section-label">Who We Are</span>
+      <h1>FASHION PIONEERS</h1>
+      <p>We convince customers because of our diversity. Our passionate team always has the latest trends and the best styles ready. We work closely with designers and brands to ensure our collection is diverse, appealing, and authentic.</p>
+    </section>
+
+    <section class="buying-section reveal">
+      <div class="image-container">
+        <img src="images/work.jpg" alt="Our Buying Team">
+      </div>
+      <div class="buying-text">
+        <span class="section-label">The Craft</span>
+        <h2>BUYING</h2>
+        <p>Our passionate Buying team always has the latest trends and the best styles ready for our customers. They work closely with various designers and brands to ensure our collection is diverse, appealing, and ahead of the curve.</p>
+      </div>
+    </section>
+
     <section class="employee-section">
-        <h1>MEET THE FASHION EMPLOYEES</h1>
-        <div class="employee-profile">
-            <img src="images/designers.jpg" alt="Kristina">
-            <div class="employee-info">
-                <h2>WHATS YOUR FAVOURITE MEMORY AT ABOUT YOU?</h2>
-                <p>"That's a good question as I really have a lot of great memories at ABOUT YOU. I loved our unicorn party because everybody was happy and proud of that milestone. In general, the memories of my team are my favorites, such as our Christmas dinner in 2019. We cooked together and had a beautiful evening."</p>
-                <p><strong>(Kristina, Head of Buying Fast & Modern Fashion)</strong></p>
-            </div>
+      <h1 class="reveal">MEET THE TEAM</h1>
+      <div class="employee-profile reveal">
+        <img src="images/designers.jpg" alt="Kristina">
+        <div class="employee-info">
+          <h2>WHAT'S YOUR FAVOURITE MEMORY AT PASSIONIS?</h2>
+          <p>"That's a good question as I really have a lot of great memories at PASSIONIS. I loved our unicorn party because everybody was happy and proud of that milestone. In general, the memories of my team are my favorites — our Christmas dinner in 2019 especially. We cooked together and had a beautiful evening."</p>
+          <strong>Kristina — Head of Buying, Fast &amp; Modern Fashion</strong>
         </div>
+      </div>
     </section>
 
+    <div class="jobs-available reveal">
+      <img src="images/work.jpg" alt="Join Our Team">
+      <span>We're always looking for passionate people to join our growing team.</span>
+    </div>
 
-</main> <!-- Footer -->
-<footer>
-  <div class="footer-container">
-      <div class="footer-section">
-          <h3>About Us</h3>
-          <p>ELLE is your ultimate source for fashion news, trends, and tutorials. Stay chic and informed with our latest updates.</p>
+    <section class="team-section">
+      <span class="section-label">The People</span>
+      <h2 class="reveal">OUR TEAM</h2>
+      <div class="team-members">
+        <div class="team-member reveal" data-delay="1">
+          <img src="images/designers.jpg" alt="Team Member">
+          <h3>Kristina M.</h3>
+          <p>Head of Buying</p>
+        </div>
+        <div class="team-member reveal" data-delay="2">
+          <img src="images/designers.jpg" alt="Team Member">
+          <h3>Sophie L.</h3>
+          <p>Creative Director</p>
+        </div>
+        <div class="team-member reveal" data-delay="3">
+          <img src="images/designers.jpg" alt="Team Member">
+          <h3>Marc D.</h3>
+          <p>Head of Design</p>
+        </div>
       </div>
-      <div class="footer-section">
-          <h3>Quick Links</h3>
-          <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Contact</a></li>
-          </ul>
-      </div>
-      <div class="footer-section">
-          <h3>Follow Us</h3>
-          <div class="social-icons">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-pinterest"></i></a>
-              <a href="#"><i class="fab fa-youtube"></i></a>
-          </div>
-      </div>
-      <div class="footer-section">
-          <h3>Subscribe to our Newsletter</h3>
-          <form class="newsletter-form">
-              <input type="email" placeholder="Enter your email" required>
-              <button type="submit">Subscribe</button>
-          </form>
-      </div>
-  </div>
-  <div class="footer-bottom">
-      <p>&copy; 2024 ELLE. All rights reserved.</p>
-  </div>
-</footer>
+    </section>
+  </main>
 
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>PASSIONIS is your ultimate source for fashion news, trends, and design courses. Stay chic and inspired.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="training.html">Courses</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Newsletter</h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 PASSIONIS. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
-
