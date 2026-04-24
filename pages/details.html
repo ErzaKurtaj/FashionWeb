@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/assets/css/details.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <script src="/assets/js/main.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/search.css">
 </head>
 <body>
   <header>
@@ -36,13 +37,45 @@
   </header>
 
   <!-- Search overlay -->
-  <div id="search-overlay" class="search-overlay" role="dialog" aria-modal="true" aria-label="Search results">
+  <div id="search-overlay" class="search-overlay" role="dialog" aria-modal="true" aria-label="Search">
     <div class="search-overlay-panel">
-      <div class="search-overlay-header">
-        <span id="search-query-label">Results for "<em id="search-query-text"></em>"</span>
-        <button id="search-close" class="search-close-btn" aria-label="Close search"><i class="fas fa-times"></i></button>
+
+      <div class="search-overlay-top">
+        <div class="search-field-wrap">
+          <span class="search-eyebrow">Search</span>
+          <div class="search-field">
+            <input type="text" id="search-overlay-input" class="search-overlay-input"
+              placeholder="What are you looking for?"
+              autocomplete="off" spellcheck="false" aria-label="Search products">
+            <button class="search-overlay-clear" id="search-overlay-clear" aria-label="Clear" hidden>
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="search-field-bar"></div>
+        </div>
+        <button class="search-overlay-close" id="search-close" aria-label="Close search">
+          <span>Close</span>
+          <i class="fas fa-times"></i>
+        </button>
       </div>
-      <div id="search-results" class="search-results-grid"></div>
+
+      <div class="search-suggestions" id="search-suggestions">
+        <span class="search-suggestions-label">Trending</span>
+        <div class="search-suggestion-tags">
+          <button class="search-tag" data-tag="dress">Dress</button>
+          <button class="search-tag" data-tag="blazer">Blazer</button>
+          <button class="search-tag" data-tag="heels">Heels</button>
+          <button class="search-tag" data-tag="wedding">Wedding</button>
+          <button class="search-tag" data-tag="elegant">Elegant</button>
+          <button class="search-tag" data-tag="old money">Old Money</button>
+        </div>
+      </div>
+
+      <div class="search-results-wrap">
+        <div class="search-results-meta" id="search-results-meta"></div>
+        <div id="search-results" class="search-results-grid"></div>
+      </div>
+
     </div>
     <div class="search-overlay-backdrop"></div>
   </div>

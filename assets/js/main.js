@@ -289,83 +289,179 @@ document.addEventListener('DOMContentLoaded', function () {
   if (qtyDisplay) qtyDisplay.value = itemCount || 1;
 
   /* ── Search ──────────────────────────────────────────────────── */
-  const searchForm      = document.querySelector('.search-form');
-  const searchInput     = searchForm && searchForm.querySelector('input[name="search"]');
-  const searchOverlay   = document.getElementById('search-overlay');
-  const searchResults   = document.getElementById('search-results');
-  const searchClose     = document.getElementById('search-close');
-  const searchQueryText = document.getElementById('search-query-text');
-  const searchBackdrop  = searchOverlay && searchOverlay.querySelector('.search-overlay-backdrop');
+  const searchForm         = document.querySelector('.search-form');
+  const searchNavInput     = searchForm && searchForm.querySelector('input[name="search"]');
+  const searchOverlay      = document.getElementById('search-overlay');
+  const searchOverlayInput = document.getElementById('search-overlay-input');
+  const searchOverlayClear = document.getElementById('search-overlay-clear');
+  const searchResults      = document.getElementById('search-results');
+  const searchMeta         = document.getElementById('search-results-meta');
+  const searchClose        = document.getElementById('search-close');
+  const searchSuggestions  = document.getElementById('search-suggestions');
+  const searchBackdrop     = searchOverlay && searchOverlay.querySelector('.search-overlay-backdrop');
 
-  let searchTimer = null;
+  let searchTimer   = null;
+  let justClosed    = false;
 
-  if (searchForm && searchOverlay) {
-    searchForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const q = searchInput ? searchInput.value.trim() : '';
-      if (q.length >= 2) runSearch(q);
-    });
-
-    if (searchInput) {
-      searchInput.addEventListener('input', function () {
-        clearTimeout(searchTimer);
-        const q = searchInput.value.trim();
-        if (q.length < 2) { closeSearch(); return; }
-        searchTimer = setTimeout(() => runSearch(q), 320);
-      });
-    }
-
-    if (searchClose)   searchClose.addEventListener('click', closeSearch);
-    if (searchBackdrop) searchBackdrop.addEventListener('click', closeSearch);
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && searchOverlay.classList.contains('active')) closeSearch();
-    });
-  }
-
-  async function runSearch(q) {
+  /* Open overlay, optionally pre-fill with a query */
+  function openSearch(initialQ) {
+    if (!searchOverlay) return;
     searchOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-    if (searchQueryText) searchQueryText.textContent = q;
-    if (searchResults)   searchResults.innerHTML = '<div class="search-loading"><i class="fas fa-spinner fa-spin"></i>&ensp;Searching…</div>';
-
-    try {
-      const res  = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-      if (!res.ok) throw new Error('Server error');
-      const data = await res.json();
-      renderResults(data.results, q);
-    } catch {
-      if (searchResults) searchResults.innerHTML = '<div class="search-empty"><p>Something went wrong.</p><span>Please try again.</span></div>';
+    setTimeout(function () {
+      if (searchOverlayInput) searchOverlayInput.focus();
+    }, 40);
+    if (initialQ && searchOverlayInput && !searchOverlayInput.value) {
+      searchOverlayInput.value = initialQ;
+      toggleClear();
+      if (initialQ.length >= 2) runSearch(initialQ);
     }
-  }
-
-  function renderResults(results, q) {
-    if (!searchResults) return;
-    if (!results || !results.length) {
-      searchResults.innerHTML = `
-        <div class="search-empty">
-          <p>No results for "<em>${q}</em>"</p>
-          <span>Try words like "dress", "blazer", "heels" or a colour</span>
-        </div>`;
-      return;
-    }
-    searchResults.innerHTML = results.map(item => `
-      <a href="${item.url}" class="search-result-item">
-        <div class="search-result-img">
-          <img src="${item.image}" alt="${item.name}" loading="lazy">
-        </div>
-        <div class="search-result-info">
-          <span class="search-result-category">${item.category}</span>
-          <h4>${item.name}</h4>
-          <p>${item.price}</p>
-        </div>
-      </a>`).join('');
   }
 
   function closeSearch() {
     if (!searchOverlay) return;
     searchOverlay.classList.remove('active');
     document.body.style.overflow = '';
+    justClosed = true;
+    setTimeout(function () { justClosed = false; }, 300);
+  }
+
+  function toggleClear() {
+    if (!searchOverlayClear || !searchOverlayInput) return;
+    searchOverlayClear.hidden = !searchOverlayInput.value.trim();
+  }
+
+  function resetResults() {
+    if (searchResults)     searchResults.innerHTML = '';
+    if (searchMeta)        searchMeta.textContent  = '';
+    if (searchSuggestions) searchSuggestions.style.display = '';
+    document.querySelectorAll('.search-tag').forEach(function (t) {
+      t.classList.remove('active');
+    });
+  }
+
+  if (searchOverlay) {
+    /* Nav form: submit → open overlay with pre-filled query */
+    if (searchForm) {
+      searchForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        openSearch(searchNavInput ? searchNavInput.value.trim() : '');
+      });
+    }
+    /* Nav input: first keystroke opens overlay */
+    if (searchNavInput) {
+      searchNavInput.addEventListener('input', function () {
+        if (!searchOverlay.classList.contains('active') && !justClosed) {
+          openSearch(searchNavInput.value.trim());
+          searchNavInput.blur();
+        }
+      });
+    }
+
+    /* Overlay input: live search */
+    if (searchOverlayInput) {
+      searchOverlayInput.addEventListener('input', function () {
+        toggleClear();
+        clearTimeout(searchTimer);
+        const q = searchOverlayInput.value.trim();
+        if (!q) { resetResults(); return; }
+        if (q.length < 2) return;
+        searchTimer = setTimeout(function () { runSearch(q); }, 280);
+      });
+      searchOverlayInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          clearTimeout(searchTimer);
+          const q = searchOverlayInput.value.trim();
+          if (q.length >= 2) runSearch(q);
+        }
+      });
+    }
+
+    /* Clear button */
+    if (searchOverlayClear) {
+      searchOverlayClear.addEventListener('click', function () {
+        searchOverlayInput.value = '';
+        toggleClear();
+        resetResults();
+        searchOverlayInput.focus();
+      });
+    }
+
+    /* Tag pills */
+    document.querySelectorAll('.search-tag').forEach(function (tag) {
+      tag.addEventListener('click', function () {
+        const q = tag.dataset.tag;
+        if (searchOverlayInput) {
+          searchOverlayInput.value = q;
+          toggleClear();
+        }
+        document.querySelectorAll('.search-tag').forEach(function (t) { t.classList.remove('active'); });
+        tag.classList.add('active');
+        runSearch(q);
+      });
+    });
+
+    /* Close */
+    if (searchClose)    searchClose.addEventListener('click', closeSearch);
+    if (searchBackdrop) searchBackdrop.addEventListener('click', closeSearch);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && searchOverlay.classList.contains('active')) closeSearch();
+    });
+  }
+
+  async function runSearch(q) {
+    if (!searchOverlay) return;
+    if (searchSuggestions) searchSuggestions.style.display = 'none';
+    if (searchMeta)        searchMeta.textContent = '';
+    if (searchResults) {
+      searchResults.innerHTML =
+        '<div class="search-loading"><div class="search-dots">' +
+        '<span></span><span></span><span></span></div></div>';
+    }
+
+    try {
+      const res  = await fetch('/api/search?q=' + encodeURIComponent(q));
+      if (!res.ok) throw new Error('server');
+      const data = await res.json();
+      renderResults(data.results, q);
+    } catch {
+      if (searchResults) {
+        searchResults.innerHTML =
+          '<div class="search-empty"><p>Something went wrong.</p>' +
+          '<span>Please try again.</span></div>';
+      }
+    }
+  }
+
+  function renderResults(results, q) {
+    if (!searchResults) return;
+
+    document.querySelectorAll('.search-tag').forEach(function (t) {
+      t.classList.toggle('active', t.dataset.tag === q.toLowerCase());
+    });
+
+    if (!results || !results.length) {
+      if (searchMeta) searchMeta.textContent = '';
+      searchResults.innerHTML =
+        '<div class="search-empty"><p>No results for "<em>' + q + '</em>"</p>' +
+        '<span>Try dress · blazer · heels · a colour</span></div>';
+      return;
+    }
+
+    if (searchMeta) {
+      searchMeta.textContent =
+        results.length + ' result' + (results.length !== 1 ? 's' : '') + ' for “' + q + '”';
+    }
+
+    searchResults.innerHTML = results.map(function (item) {
+      return '<a href="' + item.url + '" class="search-result-item">' +
+        '<div class="search-result-img">' +
+        '<img src="' + item.image + '" alt="' + item.name + '" loading="lazy"></div>' +
+        '<div class="search-result-info">' +
+        '<span class="search-result-category">' + item.category + '</span>' +
+        '<h4>' + item.name + '</h4>' +
+        '<p>' + item.price + '</p></div></a>';
+    }).join('');
   }
 });
 
