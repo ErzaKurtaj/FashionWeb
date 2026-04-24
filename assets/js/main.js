@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const navLinks = document.querySelectorAll('nav ul li a');
   if (navLinks.length) {
     const p = window.location.pathname;
-    const isShoppingPage = p.startsWith('/pages/d') || p === '/pages/details.html';
+    const isShoppingPage = /\/d\d+\.html$/.test(p) || p.endsWith('/details.html');
+    const normP = p.endsWith('/') ? p + 'index.html' : p;
     navLinks.forEach(function (link) {
       try {
-        const linkPath = new URL(link.getAttribute('href'), window.location.origin).pathname;
-        const match = linkPath === p
-          || (p === '/' && linkPath === '/index.html')
-          || (isShoppingPage && linkPath === '/pages/clothes.html');
+        const linkPath = new URL(link.getAttribute('href'), window.location.href).pathname;
+        const match = linkPath === normP
+          || (isShoppingPage && linkPath.endsWith('/pages/clothes.html'));
         if (match) link.classList.add('active');
       } catch (e) {}
     });
@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ── Details page: size selection, quantity, cart ─────────────────── */
+  const assetBase = window.location.pathname.includes('/pages/') ? '../' : '';
   let selectedSize = localStorage.getItem('selectedSize') || null;
   let itemCount = parseInt(localStorage.getItem('itemCount')) || 0;
 
@@ -182,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
     plusBtn.addEventListener('click', function () {
       if (!selectedSize) { alert('Please choose a size before adding to cart.'); return; }
       incrementItem();
-      addToCart('LONG SKIRT AND TOP', '39.95 EUR', '/assets/images/set.jpg', selectedSize);
+      addToCart('LONG SKIRT AND TOP', '39.95 EUR', assetBase + 'assets/images/set.jpg', selectedSize);
     });
   }
 
@@ -197,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (addToCartBtn) {
     addToCartBtn.addEventListener('click', function () {
       if (!selectedSize) { alert('Please choose a size before adding to cart.'); return; }
-      addToCart('LONG SKIRT AND TOP', '39.95 EUR', '/assets/images/set.jpg', selectedSize);
+      addToCart('LONG SKIRT AND TOP', '39.95 EUR', assetBase + 'assets/images/set.jpg', selectedSize);
     });
   }
 
