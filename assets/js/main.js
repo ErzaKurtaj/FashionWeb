@@ -156,13 +156,33 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── Details page: size selection, quantity, cart ─────────────────── */
   const assetBase = window.location.pathname.includes('/pages/') ? '../' : '';
   let selectedSize = localStorage.getItem('selectedSize') || null;
-  let itemCount = parseInt(localStorage.getItem('itemCount')) || 0;
+  let itemCount = 1;
 
-  /* Size options — works via event delegation AND the global selectSize() */
+  function escapeHtml(str) {
+    return String(str ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ── Size selection ───────────────────────────────────────────────── */
   const sizeOptionsContainer = document.querySelector('.size-options');
+  let sizeErrorEl = null;
+
   if (sizeOptionsContainer) {
+    sizeErrorEl = document.createElement('p');
+    sizeErrorEl.className = 'size-error';
+    sizeErrorEl.textContent = 'Please select a size to continue.';
+    sizeErrorEl.style.cssText =
+      'display:none;color:var(--c-accent);font-size:11px;letter-spacing:.06em;margin-top:8px;';
+    sizeOptionsContainer.insertAdjacentElement('afterend', sizeErrorEl);
+
     sizeOptionsContainer.addEventListener('click', function (e) {
-      if (e.target.tagName === 'SPAN') selectSize(e.target);
+      if (e.target.tagName === 'SPAN') {
+        selectSize(e.target);
+        if (sizeErrorEl) sizeErrorEl.style.display = 'none';
+      }
     });
 
     /* Restore previously selected size */
@@ -173,15 +193,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  function requireSize() {
+    if (selectedSize) return true;
+    if (sizeErrorEl) sizeErrorEl.style.display = 'block';
+    sizeOptionsContainer && sizeOptionsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return false;
+  }
+
+  /* ── Quantity stepper ─────────────────────────────────────────────── */
   const qtyDisplay = document.getElementById('quantity-display');
-  if (qtyDisplay) qtyDisplay.value = itemCount || 1;
+  if (qtyDisplay) qtyDisplay.textContent = itemCount;
 
   const plusBtn  = document.querySelector('.plus-btn');
   const minusBtn = document.querySelector('.minus-btn');
 
   if (plusBtn) {
     plusBtn.addEventListener('click', function () {
-      if (!selectedSize) { alert('Please choose a size before adding to cart.'); return; }
+      if (!requireSize()) return;
       incrementItem();
       addToCart('LONG SKIRT AND TOP', '39.95 EUR', assetBase + 'assets/images/set.jpg', selectedSize);
     });
@@ -189,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (minusBtn) {
     minusBtn.addEventListener('click', function () {
+      if (itemCount <= 1) return;
       decrementItem();
       removeFromCart();
     });
@@ -197,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const addToCartBtn = document.querySelector('.add-to-cart');
   if (addToCartBtn) {
     addToCartBtn.addEventListener('click', function () {
-      if (!selectedSize) { alert('Please choose a size before adding to cart.'); return; }
+      if (!requireSize()) return;
       addToCart('LONG SKIRT AND TOP', '39.95 EUR', assetBase + 'assets/images/set.jpg', selectedSize);
     });
   }
@@ -207,13 +236,16 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!container) return;
     const el = document.createElement('div');
     el.className = 'cart-item';
-    el.innerHTML = `
-      <img src="${image}" alt="${name}">
-      <div>
-        <p>${name}</p>
-        <p>${price}</p>
-        <p>Size: ${size}</p>
-      </div>`;
+    const img = document.createElement('img');
+    img.src = escapeHtml(image);
+    img.alt = escapeHtml(name);
+    const info = document.createElement('div');
+    info.innerHTML =
+      `<p>${escapeHtml(name)}</p>` +
+      `<p>${escapeHtml(price)}</p>` +
+      `<p>Size: ${escapeHtml(size)}</p>`;
+    el.appendChild(img);
+    el.appendChild(info);
     container.appendChild(el);
     saveCart();
     updateCartCount(1);
@@ -238,15 +270,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function incrementItem() {
     itemCount++;
-    if (qtyDisplay) qtyDisplay.value = itemCount;
-    localStorage.setItem('itemCount', itemCount);
+    if (qtyDisplay) qtyDisplay.textContent = itemCount;
   }
 
   function decrementItem() {
-    if (itemCount > 0) {
+    if (itemCount > 1) {
       itemCount--;
-      if (qtyDisplay) qtyDisplay.value = itemCount;
-      localStorage.setItem('itemCount', itemCount);
+      if (qtyDisplay) qtyDisplay.textContent = itemCount;
     }
   }
 
@@ -263,31 +293,92 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function loadCart() {
-    const items    = JSON.parse(localStorage.getItem('cartItems') || '[]');
-    const count    = parseInt(localStorage.getItem('cartCount')) || 0;
+    const items   = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const count   = parseInt(localStorage.getItem('cartCount')) || 0;
     const container = document.getElementById('cart-items');
-    const badge    = document.getElementById('cart-count');
+    const badge   = document.getElementById('cart-count');
 
     if (badge) badge.textContent = count;
 
     if (container) {
-      items.forEach(item => {
+      items.forEach(function (item) {
         const el = document.createElement('div');
         el.className = 'cart-item';
-        el.innerHTML = `
-          <img src="${item.image}" alt="${item.name}">
-          <div>
-            <p>${item.name}</p>
-            <p>${item.price}</p>
-            <p>Size: ${item.size}</p>
-          </div>`;
+        const img = document.createElement('img');
+        img.src = escapeHtml(item.image);
+        img.alt = escapeHtml(item.name);
+        const info = document.createElement('div');
+        info.innerHTML =
+          `<p>${escapeHtml(item.name)}</p>` +
+          `<p>${escapeHtml(item.price)}</p>` +
+          `<p>Size: ${escapeHtml(item.size)}</p>`;
+        el.appendChild(img);
+        el.appendChild(info);
         container.appendChild(el);
       });
     }
   }
 
   loadCart();
-  if (qtyDisplay) qtyDisplay.value = itemCount || 1;
+  if (qtyDisplay) qtyDisplay.textContent = itemCount;
+
+  /* ── Grid view toggle (3 / 2 columns) ───────────────────────── */
+  document.querySelectorAll('.grid-toggle').forEach(function (toggle) {
+    const container = toggle.closest('.items-section').querySelector('.items-container');
+    if (!container) return;
+
+    toggle.querySelectorAll('.grid-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        toggle.querySelectorAll('.grid-btn').forEach(function (b) {
+          b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        container.classList.remove('grid-2', 'grid-3');
+        container.classList.add('grid-' + btn.dataset.cols);
+      });
+    });
+  });
+
+  /* ── User dropdown: show account info + logout ───────────────── */
+  if (userDropdown) {
+    fetch('/api/auth/me')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data.name) return;
+
+        const panel = document.createElement('div');
+        panel.className = 'account-panel';
+
+        const greeting = document.createElement('p');
+        greeting.className = 'account-greeting';
+        greeting.textContent = 'Welcome back';
+
+        const nameEl = document.createElement('p');
+        nameEl.className = 'account-name';
+        nameEl.textContent = data.name;
+
+        const emailEl = document.createElement('p');
+        emailEl.className = 'account-email';
+        emailEl.textContent = data.email;
+
+        const signOutBtn = document.createElement('button');
+        signOutBtn.className = 'btn-sign-out';
+        signOutBtn.textContent = 'Sign Out';
+        signOutBtn.addEventListener('click', function () {
+          fetch('/api/auth/logout', { method: 'POST' })
+            .then(function () { window.location.href = '/login.html'; });
+        });
+
+        panel.appendChild(greeting);
+        panel.appendChild(nameEl);
+        panel.appendChild(emailEl);
+        panel.appendChild(signOutBtn);
+
+        userDropdown.innerHTML = '';
+        userDropdown.appendChild(panel);
+      })
+      .catch(function () {});
+  }
 
   /* ── Search ──────────────────────────────────────────────────── */
   const searchForm         = document.querySelector('.search-form');

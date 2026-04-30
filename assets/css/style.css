@@ -382,6 +382,58 @@ header.scrolled .hamburger-btn {
   text-decoration: underline;
 }
 
+/* Account panel (replaces login form when user is authenticated) */
+.account-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 4px 0;
+}
+
+.account-greeting {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-mid);
+  margin-bottom: 10px;
+}
+
+.account-name {
+  font-family: var(--f-serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--c-dark);
+  margin-bottom: 4px;
+}
+
+.account-email {
+  font-size: 11px;
+  color: var(--c-mid);
+  margin-bottom: 24px;
+}
+
+.btn-sign-out {
+  width: 100%;
+  padding: 13px;
+  background: var(--c-dark);
+  color: var(--c-white);
+  border: none;
+  cursor: pointer;
+  font-family: var(--f-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 0 var(--c-accent);
+  transition: box-shadow 0.4s var(--ease);
+}
+
+.btn-sign-out:hover {
+  box-shadow: inset 300px 0 0 0 var(--c-accent);
+}
+
 .cart-empty {
   text-align: center;
   padding: 12px 0;
@@ -508,30 +560,34 @@ header.scrolled .hamburger-btn {
   background: var(--c-bg);
 }
 
-.items-section > .section-label {
+/* Section heading + view toggle row */
+.section-head {
+  position: relative;
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-head .section-label {
   display: block;
   font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--c-accent);
-  text-align: center;
   margin-bottom: 14px;
 }
 
-.items-section > h2 {
+.section-head h2 {
   font-family: var(--f-serif);
   font-size: clamp(28px, 3vw, 46px);
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--c-dark);
-  text-align: center;
-  margin-bottom: 64px;
   position: relative;
 }
 
-.items-section > h2::after {
+.section-head h2::after {
   content: "";
   display: block;
   width: 32px;
@@ -540,10 +596,87 @@ header.scrolled .hamburger-btn {
   margin: 18px auto 0;
 }
 
+/* View toggle: 3 / 2 */
+.grid-toggle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.grid-toggle-label {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-light);
+}
+
+.grid-toggle-sep {
+  font-size: 10px;
+  color: var(--c-light);
+  line-height: 1;
+}
+
+.grid-btn {
+  background: none;
+  border: none;
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--c-light);
+  cursor: pointer;
+  padding: 2px 4px;
+  position: relative;
+  transition: color 0.2s var(--ease);
+}
+
+.grid-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 4px;
+  right: 4px;
+  height: 1px;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s var(--ease);
+}
+
+.grid-btn.active {
+  color: var(--c-dark);
+}
+
+.grid-btn.active::after {
+  transform: scaleX(1);
+}
+
+.grid-btn:not(.active):hover {
+  color: var(--c-mid);
+}
+
+/* Grid layouts */
 .items-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  transition: grid-template-columns 0.2s var(--ease);
+}
+
+.items-container.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.items-container.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.items-container.grid-2 .item img {
+  height: 520px;
 }
 
 /* Item card */
@@ -553,23 +686,37 @@ header.scrolled .hamburger-btn {
   background: var(--c-white);
   cursor: pointer;
   transition:
-    transform var(--dur) var(--ease),
-    box-shadow var(--dur) var(--ease);
+    transform 0.36s var(--ease),
+    box-shadow 0.36s var(--ease);
+}
+
+.item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  transition: border-color 0.36s var(--ease);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .item:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--sh);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 56px rgba(25, 23, 20, 0.13);
+}
+
+.item:hover::after {
+  border-color: var(--c-line);
 }
 
 .item img {
   width: 100%;
   height: 400px;
   object-fit: cover;
-  transition: transform 0.8s var(--ease);
+  transition: transform 0.7s var(--ease);
 }
 .item:hover img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .item h3 {
@@ -867,9 +1014,7 @@ footer {
   footer {
     padding: 60px 40px 0;
   }
-  .items-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  /* default is already 3 cols; grid-2 keeps 2 at this breakpoint */
   .footer-container {
     grid-template-columns: repeat(2, 1fr);
     gap: 32px;
@@ -877,7 +1022,8 @@ footer {
 }
 
 @media (max-width: 960px) {
-  .items-container {
+  .items-container,
+  .items-container.grid-3 {
     grid-template-columns: repeat(2, 1fr);
   }
   .content {
@@ -958,12 +1104,20 @@ footer {
   .items-section {
     padding: 64px 20px;
   }
-  .items-container {
+  .items-container,
+  .items-container.grid-3,
+  .items-container.grid-2 {
     grid-template-columns: repeat(2, 1fr);
     gap: 14px;
   }
+  .items-container.grid-2 .item img {
+    height: 260px;
+  }
   .item img {
     height: 260px;
+  }
+  .grid-toggle {
+    display: none;
   }
   .testimonials {
     padding: 72px 24px;
@@ -981,8 +1135,13 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .items-container {
+  .items-container,
+  .items-container.grid-3,
+  .items-container.grid-2 {
     grid-template-columns: 1fr;
+  }
+  .items-container.grid-2 .item img {
+    height: 340px;
   }
   .item img {
     height: 340px;
