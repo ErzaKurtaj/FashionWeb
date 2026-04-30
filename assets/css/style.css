@@ -617,7 +617,7 @@ header.scrolled .hamburger-btn {
    TESTIMONIALS
 ───────────────────────────────────── */
 .testimonials {
-  background: var(--c-dark);
+  background: #2e2925;
   padding: 112px 80px;
   text-align: center;
 }
@@ -714,116 +714,108 @@ article h2 {
 ───────────────────────────────────── */
 footer {
   background: var(--c-dark);
-  color: rgba(255, 255, 255, 0.55);
-  padding: 88px 80px 0;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 80px 60px 0;
 }
 
 .footer-container {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 2fr;
-  gap: 60px;
-  padding-bottom: 72px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-section h3 {
   font-family: var(--f-sans);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.88);
-  margin-bottom: 26px;
+  color: var(--c-white);
+  margin-bottom: 24px;
 }
 .footer-section p {
   font-size: 13px;
-  line-height: 1.9;
+  line-height: 1.8;
 }
 .footer-section ul {
   list-style: none;
   padding: 0;
 }
 .footer-section ul li {
-  margin-bottom: 11px;
+  margin-bottom: 10px;
 }
 .footer-section ul li a {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
   font-size: 13px;
-  transition: color var(--dur);
+  transition: color var(--dur) var(--ease);
 }
 .footer-section ul li a:hover {
-  color: var(--c-accent);
+  color: var(--c-white);
 }
 
 .social-icons {
   display: flex;
-  gap: 22px;
+  gap: 16px;
 }
 .social-icons a {
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 17px;
   text-decoration: none;
-  display: inline-block;
-  transition:
-    color var(--dur),
-    transform var(--dur);
+  transition: color var(--dur) var(--ease);
 }
 .social-icons a:hover {
   color: var(--c-accent);
-  transform: translateY(-2px);
 }
 
 .newsletter-form {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
+  margin-top: 12px;
 }
 .newsletter-form input {
-  padding: 11px 0;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-  background: transparent;
-  color: #fff;
+  flex: 1;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: none;
+  color: var(--c-white);
   font-family: var(--f-sans);
   font-size: 13px;
   outline: none;
-  transition: border-color var(--dur);
 }
 .newsletter-form input::placeholder {
-  color: rgba(255, 255, 255, 0.26);
-}
-.newsletter-form input:focus {
-  border-bottom-color: var(--c-accent);
+  color: rgba(255, 255, 255, 0.4);
 }
 .newsletter-form button {
-  align-self: flex-start;
-  padding: 11px 28px;
+  padding: 10px 16px;
   background: var(--c-accent);
-  color: #fff;
+  color: var(--c-white);
   border: none;
   cursor: pointer;
   font-family: var(--f-sans);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  box-shadow: inset 0 0 0 0 var(--c-dark);
-  transition: box-shadow 0.4s var(--ease);
+  transition: background var(--dur) var(--ease);
 }
 .newsletter-form button:hover {
-  box-shadow: inset 300px 0 0 0 var(--c-dark);
+  background: var(--c-white);
+  color: var(--c-dark);
 }
 
 .footer-bottom {
   text-align: center;
-  padding: 28px 0;
+  padding: 24px 0;
 }
 .footer-bottom p {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
 }
 
 /* ─────────────────────────────────────
@@ -868,17 +860,19 @@ footer {
   }
   .items-section,
   .testimonials,
-  .content,
-  footer {
+  .content {
     padding-left: 40px;
     padding-right: 40px;
+  }
+  footer {
+    padding: 60px 40px 0;
   }
   .items-container {
     grid-template-columns: repeat(3, 1fr);
   }
   .footer-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 44px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
   }
 }
 
@@ -978,12 +972,11 @@ footer {
     padding: 64px 20px;
   }
   footer {
-    padding: 64px 20px 0;
+    padding: 48px 20px 0;
   }
   .footer-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 36px;
-    padding-bottom: 52px;
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 }
 
@@ -993,9 +986,6 @@ footer {
   }
   .item img {
     height: 340px;
-  }
-  .footer-container {
-    grid-template-columns: 1fr;
   }
   .content {
     padding: 56px 20px;
