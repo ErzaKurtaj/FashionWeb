@@ -3,14 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Passionis — Fashion</title>
+    <title>Passionis</title>
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/search.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     />
+    <link
+      rel="icon"
+      href="/assets/images/logoPassionis.svg"
+      type="image/svg+xml"
+    />
     <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/chat.js" defer></script>
   </head>
   <body>
     <header>
@@ -132,7 +138,11 @@
     <main>
       <section class="hero">
         <div class="hero-content">
-          <img src="assets/images/finalshot.png" alt="Fashion" class="hero-image" />
+          <img
+            src="assets/images/finalshot.png"
+            alt="Fashion"
+            class="hero-image"
+          />
         </div>
         <div class="overlay-text">
           <h1>FASHION</h1>
@@ -146,12 +156,12 @@
           <h2>THE LATEST TRENDS</h2>
           <div class="grid-toggle" aria-label="Change grid layout">
             <span class="grid-toggle-label">View</span>
-            <button class="grid-btn active" data-cols="3">3</button>
+            <button class="grid-btn active" data-cols="4">4</button>
             <span class="grid-toggle-sep">/</span>
-            <button class="grid-btn" data-cols="2">2</button>
+            <button class="grid-btn" data-cols="3">3</button>
           </div>
         </div>
-        <div class="items-container grid-3">
+        <div class="items-container grid-4">
           <div class="item reveal" data-delay="1">
             <img src="assets/images/dress.jpg" alt="Trendy Dresses" />
             <h3>TRENDY DRESSES</h3>
@@ -159,7 +169,9 @@
               Explore our collection of stylish dresses perfect for any
               occasion. Comfort meets elegance.
             </p>
-            <button onclick="location.href='pages/clothes.html'">View More</button>
+            <button onclick="location.href = 'pages/clothes.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="2">
             <img src="assets/images/oldmoney.jpg" alt="Old Money Style" />
@@ -168,7 +180,9 @@
               Embrace the classic and sophisticated "Old Money" aesthetic with
               timeless, refined pieces.
             </p>
-            <button onclick="location.href='pages/clothes.html'">View More</button>
+            <button onclick="location.href = 'pages/clothes.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="3">
             <img src="assets/images/chic.jpg" alt="Elegant Clothes" />
@@ -177,7 +191,9 @@
               Refined and chic options that add sophistication to your look, for
               both professional and social settings.
             </p>
-            <button onclick="location.href='pages/clothes.html'">View More</button>
+            <button onclick="location.href = 'pages/clothes.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="4">
             <img src="assets/images/simple.jpg" alt="Simple Clothes" />
@@ -186,7 +202,9 @@
               Minimalist designs that are versatile and easy to style for any
               occasion. Less is more.
             </p>
-            <button onclick="location.href='pages/clothes.html'">View More</button>
+            <button onclick="location.href = 'pages/clothes.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="5">
             <img src="assets/images/wedding.jpg" alt="Wedding Clothes" />
@@ -195,7 +213,9 @@
               Make your special day memorable with our exquisite bridal and
               guest attire collection.
             </p>
-            <button onclick="location.href='pages/clothes.html'">View More</button>
+            <button onclick="location.href = 'pages/clothes.html'">
+              View More
+            </button>
           </div>
         </div>
       </section>
@@ -206,12 +226,12 @@
           <h2>SHOES DESIGN</h2>
           <div class="grid-toggle" aria-label="Change grid layout">
             <span class="grid-toggle-label">View</span>
-            <button class="grid-btn active" data-cols="3">3</button>
+            <button class="grid-btn active" data-cols="4">4</button>
             <span class="grid-toggle-sep">/</span>
-            <button class="grid-btn" data-cols="2">2</button>
+            <button class="grid-btn" data-cols="3">3</button>
           </div>
         </div>
-        <div class="items-container grid-3">
+        <div class="items-container grid-4">
           <div class="item reveal" data-delay="1">
             <img src="assets/images/1.jpg" alt="Purple Heels" />
             <h3>Purple Heels</h3>
@@ -219,7 +239,9 @@
               Add a pop of color with these stunning purple heels. Perfect for a
               bold fashion statement.
             </p>
-            <button onclick="location.href='pages/training.html'">View More</button>
+            <button onclick="location.href = 'pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="2">
             <img src="assets/images/red.jpg" alt="Red Heels" />
@@ -228,7 +250,9 @@
               Make a striking impression with our red heels — drama and elegance
               in every step.
             </p>
-            <button onclick="location.href='pages/training.html'">View More</button>
+            <button onclick="location.href = 'pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="3">
             <img src="assets/images/LV.jpg" alt="Black Heels" />
@@ -237,7 +261,9 @@
               A timeless classic. Our black heels feature elegant, versatile
               designs for any occasion.
             </p>
-            <button onclick="location.href='pages/training.html'">View More</button>
+            <button onclick="location.href = 'pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="4">
             <img src="assets/images/SL.jpg" alt="Brown Heels" />
@@ -246,7 +272,9 @@
               Sophisticated and stylish — perfect for an understated yet chic
               look.
             </p>
-            <button onclick="location.href='pages/training.html'">View More</button>
+            <button onclick="location.href = 'pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="5">
             <img src="assets/images/blue.jpg" alt="Blue Heels" />
@@ -255,7 +283,9 @@
               Stand out with our unique blue heels — a touch of uniqueness to
               any ensemble.
             </p>
-            <button onclick="location.href='pages/training.html'">View More</button>
+            <button onclick="location.href = 'pages/training.html'">
+              View More
+            </button>
           </div>
           <div class="item reveal" data-delay="6">
             <img src="assets/images/result.jpg" alt="Drawing" />
@@ -264,7 +294,9 @@
               Discover the art of shoe design with our exclusive concept
               drawings and creative process.
             </p>
-            <button onclick="location.href='pages/training.html'">View More</button>
+            <button onclick="location.href = 'pages/training.html'">
+              View More
+            </button>
           </div>
         </div>
       </section>

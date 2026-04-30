@@ -5,6 +5,7 @@ const path         = require('path');
 const cookieParser = require('cookie-parser');
 const jwt          = require('jsonwebtoken');
 const authRoutes   = require('./routes/authRoutes');
+const chatRoutes   = require('./routes/chatRoutes');
 const { initDb }   = require('./models/db');
 
 const app  = express();
@@ -20,6 +21,9 @@ app.use(cookieParser());
 
 /* ── Auth API ───────────────────────────────────────────────────── */
 app.use('/api/auth', authRoutes);
+
+/* ── Chat API ───────────────────────────────────────────────────── */
+app.use('/api/chat', chatRoutes);
 
 /* ── Product catalogue ──────────────────────────────────────────── */
 const products = [

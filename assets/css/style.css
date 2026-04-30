@@ -662,9 +662,13 @@ header.scrolled .hamburger-btn {
 /* Grid layouts */
 .items-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   transition: grid-template-columns 0.2s var(--ease);
+}
+
+.items-container.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .items-container.grid-3 {
@@ -1023,6 +1027,7 @@ footer {
 
 @media (max-width: 960px) {
   .items-container,
+  .items-container.grid-4,
   .items-container.grid-3 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1105,6 +1110,7 @@ footer {
     padding: 64px 20px;
   }
   .items-container,
+  .items-container.grid-4,
   .items-container.grid-3,
   .items-container.grid-2 {
     grid-template-columns: repeat(2, 1fr);
@@ -1136,6 +1142,7 @@ footer {
 
 @media (max-width: 480px) {
   .items-container,
+  .items-container.grid-4,
   .items-container.grid-3,
   .items-container.grid-2 {
     grid-template-columns: 1fr;
