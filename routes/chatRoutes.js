@@ -1,6 +1,7 @@
 // Requires Node 18+ (native fetch). Add node-fetch if on older Node.
-const express = require("express");
-const router = express.Router();
+const express          = require("express");
+const router           = express.Router();
+const { searchProducts } = require("../models/products");
 
 const SYSTEM_PROMPT = `You are Erza, the personal style consultant for PASSIONIS — a luxury fashion house.
 
@@ -26,6 +27,7 @@ WEBSITE NAVIGATION: FASHION (home /), SHOPPING (/pages/clothes.html), TRAINING C
 
 RULES:
 - Keep replies concise: 2–3 sentences unless listing products or styling options
+- When product cards are being shown alongside your reply, keep your text brief — just introduce or narrate the selection
 - Name specific items with prices when making recommendations
 - For cart or checkout questions: explain users can click "BUY NOW" on a product, log in to their account, and complete purchase
 - If asked about something unrelated to fashion, shopping, or the brand: "My expertise is in fashion and style — shall I help you find the perfect piece?"
@@ -38,55 +40,66 @@ router.post("/", async (req, res) => {
     return res.status(400).json({ error: "Message is required." });
   }
 
+  const text = message.trim();
+
   const messages = [
     { role: "system", content: SYSTEM_PROMPT },
     ...history
       .slice(-8)
       .map((h) => ({ role: h.role, content: String(h.content) })),
-    { role: "user", content: message.trim() },
+    { role: "user", content: text },
   ];
 
-  try {
-    const response = await fetch("http://localhost:11434/api/chat", {
+  if (!process.env.GROQ_API_KEY) {
+    return res.status(503).json({
+      error: "Erza is offline. Set GROQ_API_KEY in your .env file.",
+    });
+  }
+
+  // Run Groq and product search in parallel
+  const [groqRes, products] = await Promise.all([
+    fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type":  "application/json",
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+      },
       body: JSON.stringify({
-        model: process.env.OLLAMA_MODEL || "llama3.2",
+        model:       process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
         messages,
-        stream: false,
-        options: { temperature: 0.72, num_predict: 280 },
+        temperature: 0.72,
+        max_tokens:  280,
       }),
       signal: AbortSignal.timeout(40000),
-    });
+    }).catch((err) => ({ _fetchError: err })),
 
-    if (!response.ok) {
-      const text = await response.text().catch(() => "");
-      console.error("Ollama error:", response.status, text);
-      return res
-        .status(502)
-        .json({ error: "The AI service returned an error. Please try again." });
-    }
+    Promise.resolve(searchProducts(text, 5)),
+  ]);
 
-    const data = await response.json();
-    const reply =
-      (data.message?.content || "").trim() ||
-      "I was unable to generate a response — please try again.";
-
-    res.json({ reply });
-  } catch (err) {
-    if (err.code === "ECONNREFUSED") {
-      return res.status(503).json({
-        error: "Erza is offline. Please start Ollama with: ollama serve",
-      });
-    }
+  // Handle Groq fetch errors
+  if (groqRes._fetchError) {
+    const err = groqRes._fetchError;
     if (err.name === "TimeoutError") {
-      return res
-        .status(504)
-        .json({ error: "Response timed out. Please try again." });
+      return res.status(504).json({ error: "Response timed out. Please try again." });
     }
     console.error("Chat route error:", err.message);
-    res.status(500).json({ error: "Something went wrong. Please try again." });
+    return res.status(500).json({ error: "Something went wrong. Please try again." });
   }
+
+  if (!groqRes.ok) {
+    const errText = await groqRes.text().catch(() => "");
+    console.error("Groq error:", groqRes.status, errText);
+    return res.status(502).json({ error: "The AI service returned an error. Please try again." });
+  }
+
+  const data  = await groqRes.json();
+  const reply = (data.choices?.[0]?.message?.content || "").trim() ||
+                "I was unable to generate a response — please try again.";
+
+  res.json({
+    reply,
+    products: products.length > 0 ? products : null,
+  });
 });
 
 module.exports = router;

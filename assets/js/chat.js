@@ -3,7 +3,7 @@
 
   // Inject stylesheet — absolute path works from any page depth
   var link = document.createElement("link");
-  link.rel = "stylesheet";
+  link.rel  = "stylesheet";
   link.href = "/assets/css/chat.css";
   document.head.appendChild(link);
 
@@ -15,9 +15,9 @@
     '<div class="chat-panel" role="dialog" aria-modal="true" aria-label="Erza chat">',
     '  <div class="chat-hd">',
     '    <div class="chat-hd-left">',
-    '      <div class="chat-avatar">A</div>',
+    '      <div class="chat-avatar">E</div>',
     "      <div>",
-    '        <div class="chat-hd-name">ARIA</div>',
+    '        <div class="chat-hd-name">ERZA</div>',
     '        <div class="chat-hd-sub">PASSIONIS Style Consultant</div>',
     "      </div>",
     "    </div>",
@@ -63,14 +63,14 @@
 
   // ── References ─────────────────────────────────────────────────
   var toggle = document.getElementById("chat-toggle");
-  var msgs = document.getElementById("chat-msgs");
-  var input = document.getElementById("chat-in");
-  var btn = document.getElementById("chat-btn");
-  var notif = document.getElementById("chat-notif");
+  var msgs   = document.getElementById("chat-msgs");
+  var input  = document.getElementById("chat-in");
+  var btn    = document.getElementById("chat-btn");
+  var notif  = document.getElementById("chat-notif");
 
-  var history = [];
-  var isOpen = false;
-  var isBusy = false;
+  var history  = [];
+  var isOpen   = false;
+  var isBusy   = false;
   var welcomed = false;
 
   // Show notification badge after 2 s (invites user to open)
@@ -90,11 +90,10 @@
         appendBot(
           "Welcome to PASSIONIS. I'm Erza, your personal style consultant. " +
             "Are you looking for something specific — an occasion, a colour, or a particular piece?",
+          null
         );
       }
-      setTimeout(function () {
-        input.focus();
-      }, 300);
+      setTimeout(function () { input.focus(); }, 300);
     }
   });
 
@@ -125,28 +124,23 @@
     var typing = appendTyping();
 
     fetch("/api/chat", {
-      method: "POST",
+      method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, history: history }),
+      body:    JSON.stringify({ message: text, history: history }),
     })
-      .then(function (r) {
-        return r.json();
-      })
+      .then(function (r) { return r.json(); })
       .then(function (data) {
         typing.remove();
-        var reply =
-          data.reply ||
-          data.error ||
-          "I'm unable to respond right now — please try again.";
-        appendBot(reply);
+        var reply = data.reply || data.error || "I'm unable to respond right now — please try again.";
+        appendBot(reply, data.products || null);
 
-        history.push({ role: "user", content: text });
+        history.push({ role: "user",      content: text  });
         history.push({ role: "assistant", content: reply });
         if (history.length > 20) history = history.slice(-20);
       })
       .catch(function () {
         typing.remove();
-        appendBot("I'm momentarily unavailable. Please try again in a moment.");
+        appendBot("I'm momentarily unavailable. Please try again in a moment.", null);
       })
       .finally(function () {
         isBusy = false;
@@ -156,10 +150,10 @@
 
   // ── DOM helpers ────────────────────────────────────────────────
   function appendUser(text) {
-    var row = document.createElement("div");
+    var row    = document.createElement("div");
     row.className = "chat-row user";
     var bubble = document.createElement("div");
-    bubble.className = "chat-bubble";
+    bubble.className  = "chat-bubble";
     bubble.textContent = text;
     row.appendChild(bubble);
     msgs.appendChild(row);
@@ -167,25 +161,67 @@
     return row;
   }
 
-  function appendBot(text) {
-    var row = document.createElement("div");
+  function appendBot(text, products) {
+    var wrap = document.createElement("div");
+    wrap.className = "chat-bot-wrap";
+
+    var row    = document.createElement("div");
     row.className = "chat-row bot";
     var bubble = document.createElement("div");
-    bubble.className = "chat-bubble";
+    bubble.className  = "chat-bubble";
     bubble.textContent = text;
     row.appendChild(bubble);
-    msgs.appendChild(row);
+    wrap.appendChild(row);
+
+    if (products && products.length > 0) {
+      wrap.appendChild(buildProductCards(products));
+    }
+
+    msgs.appendChild(wrap);
     scrollBottom();
-    return row;
+    return wrap;
   }
 
   function appendTyping() {
     var wrap = document.createElement("div");
     wrap.className = "chat-typing-wrap";
-    wrap.innerHTML = '<div class="chat-typing"><i></i><i></i><i></i></div>';
+    wrap.innerHTML  = '<div class="chat-typing"><i></i><i></i><i></i></div>';
     msgs.appendChild(wrap);
     scrollBottom();
     return wrap;
+  }
+
+  // ── Product cards ──────────────────────────────────────────────
+  function buildProductCards(products) {
+    var strip = document.createElement("div");
+    strip.className = "chat-products";
+
+    products.forEach(function (p) {
+      var card = document.createElement("a");
+      card.className = "chat-card";
+      card.href      = esc(p.url);
+      card.innerHTML =
+        '<div class="chat-card-img">' +
+          '<img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" loading="lazy" />' +
+        "</div>" +
+        '<div class="chat-card-info">' +
+          '<span class="chat-card-cat">' + esc(p.category) + "</span>" +
+          '<p class="chat-card-name">'   + esc(p.name)     + "</p>" +
+          '<span class="chat-card-price">' + esc(p.price)  + "</span>" +
+          '<span class="chat-card-cta">View Product</span>' +
+        "</div>";
+      strip.appendChild(card);
+    });
+
+    return strip;
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
   function scrollBottom() {
