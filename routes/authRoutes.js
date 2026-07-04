@@ -36,20 +36,28 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ error: 'Passwords do not match.' });
 
     const existing = await pool.query(
-      'SELECT id FROM users WHERE email = $1',
+      'SELECT id, is_verified FROM users WHERE email = $1',
       [email.toLowerCase()]
     );
-    if (existing.rows.length > 0)
+    if (existing.rows.length > 0 && existing.rows[0].is_verified)
       return res.status(409).json({ error: 'An account with that email already exists.' });
 
     const hash  = await bcrypt.hash(password, 12);
     const token = crypto.randomBytes(32).toString('hex');
 
-    const { rows } = await pool.query(
-      `INSERT INTO users (name, email, password, is_verified, verification_token)
-       VALUES ($1, $2, $3, FALSE, $4) RETURNING id, name`,
-      [name, email.toLowerCase(), hash, token]
-    );
+    // If an unverified account already exists for this email, refresh it
+    // instead of blocking the signup (they may never have received the email).
+    const { rows } = existing.rows.length > 0
+      ? await pool.query(
+          `UPDATE users SET name = $1, password = $2, verification_token = $3
+           WHERE email = $4 RETURNING id, name`,
+          [name, hash, token, email.toLowerCase()]
+        )
+      : await pool.query(
+          `INSERT INTO users (name, email, password, is_verified, verification_token)
+           VALUES ($1, $2, $3, FALSE, $4) RETURNING id, name`,
+          [name, email.toLowerCase(), hash, token]
+        );
 
     const verifyUrl = `${req.protocol}://${req.get('host')}/api/auth/verify?token=${token}`;
 
