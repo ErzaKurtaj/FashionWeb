@@ -18,26 +18,33 @@
     <style>
       /* ─── Tokens ─────────────────────────────────────────────── */
       :root {
-        --f-serif:  "Cormorant Garamond", Georgia, serif;
-        --f-sans:   "Jost", system-ui, sans-serif;
+        --f-serif: "Cormorant Garamond", Georgia, serif;
+        --f-sans: "Jost", system-ui, sans-serif;
 
-        --c-bg:     #0b0a08;
-        --c-panel:  #0e0d0b;
-        --c-gold:   #c9a870;
+        --c-bg: #0b0a08;
+        --c-panel: #0e0d0b;
+        --c-gold: #c9a870;
         --c-gold-d: rgba(201, 168, 112, 0.42);
-        --c-cream:  #f0ede6;
-        --c-muted:  rgba(240, 237, 230, 0.36);
-        --c-line:   rgba(240, 237, 230, 0.07);
+        --c-cream: #f0ede6;
+        --c-muted: rgba(240, 237, 230, 0.36);
+        --c-line: rgba(240, 237, 230, 0.07);
 
-        --ease:    cubic-bezier(0.4, 0, 0.2, 1);
-        --ease-o:  cubic-bezier(0, 0, 0.2, 1);
-        --spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+        --ease: cubic-bezier(0.4, 0, 0.2, 1);
+        --ease-o: cubic-bezier(0, 0, 0.2, 1);
+        --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
       /* ─── Reset ──────────────────────────────────────────────── */
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-      html, body {
+      html,
+      body {
         height: 100%;
         font-family: var(--f-sans);
         background: var(--c-bg);
@@ -57,7 +64,7 @@
       .auth-brand {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
         padding: 64px 88px;
         border-right: 1px solid var(--c-line);
         position: relative;
@@ -67,18 +74,26 @@
 
       /* warm ambient glow */
       .auth-brand::before {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         background:
-          radial-gradient(ellipse at 15% 85%, rgba(201,168,112,0.09) 0%, transparent 52%),
-          radial-gradient(ellipse at 85% 8%,  rgba(201,168,112,0.04) 0%, transparent 45%);
+          radial-gradient(
+            ellipse at 15% 85%,
+            rgba(201, 168, 112, 0.09) 0%,
+            transparent 52%
+          ),
+          radial-gradient(
+            ellipse at 85% 8%,
+            rgba(201, 168, 112, 0.04) 0%,
+            transparent 45%
+          );
         pointer-events: none;
       }
 
       /* large ghost letter */
       .auth-brand::after {
-        content: 'P';
+        content: "P";
         position: absolute;
         right: -48px;
         bottom: -80px;
@@ -103,10 +118,10 @@
       }
 
       .brand-center {
-        flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
+        margin-top: 20px;
         position: relative;
         z-index: 1;
       }
@@ -120,11 +135,11 @@
         letter-spacing: 0.3em;
         text-transform: uppercase;
         color: var(--c-gold);
-        margin-bottom: 32px;
+        margin-bottom: 24px;
       }
 
       .brand-eyebrow::before {
-        content: '';
+        content: "";
         width: 28px;
         height: 1px;
         background: var(--c-gold);
@@ -139,7 +154,7 @@
         line-height: 1.02;
         color: var(--c-cream);
         letter-spacing: -0.01em;
-        margin-bottom: 36px;
+        margin-bottom: 26px;
       }
 
       .brand-headline em {
@@ -154,7 +169,7 @@
         line-height: 2.1;
         letter-spacing: 0.025em;
         color: var(--c-muted);
-        max-width: 400px;
+        white-space: nowrap;
       }
 
       .brand-footer {
@@ -164,6 +179,7 @@
         color: rgba(240, 237, 230, 0.16);
         position: relative;
         z-index: 1;
+        margin-top: 20px;
       }
 
       /* ─── Right: form panel ──────────────────────────────────── */
@@ -205,7 +221,7 @@
       }
 
       .auth-tab::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: -1px;
         left: 0;
@@ -217,15 +233,21 @@
         transition: transform 0.4s var(--ease);
       }
 
-      .auth-tab.active { color: var(--c-cream); }
-      .auth-tab.active::after { transform: scaleX(1); }
+      .auth-tab.active {
+        color: var(--c-cream);
+      }
+      .auth-tab.active::after {
+        transform: scaleX(1);
+      }
 
       .auth-tab:not(.active):hover {
         color: rgba(240, 237, 230, 0.55);
       }
 
       /* ─── Forms ──────────────────────────────────────────────── */
-      .auth-form[hidden] { display: none !important; }
+      .auth-form[hidden] {
+        display: none !important;
+      }
 
       .auth-form {
         display: flex;
@@ -235,8 +257,14 @@
       }
 
       @keyframes formIn {
-        from { opacity: 0; transform: translateY(18px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       /* ─── Field group ────────────────────────────────────────── */
@@ -263,10 +291,14 @@
       .form-group input {
         background-color: transparent;
         background-image:
-          linear-gradient(rgba(240,237,230,0.1), rgba(240,237,230,0.1)),
+          linear-gradient(rgba(240, 237, 230, 0.1), rgba(240, 237, 230, 0.1)),
           linear-gradient(var(--c-gold), var(--c-gold));
-        background-size: 100% 1px, 0% 1px;
-        background-position: 0 100%, 0 100%;
+        background-size:
+          100% 1px,
+          0% 1px;
+        background-position:
+          0 100%,
+          0 100%;
         background-repeat: no-repeat;
         border: none;
         color: var(--c-cream);
@@ -281,7 +313,9 @@
       }
 
       .form-group input:focus {
-        background-size: 100% 1px, 100% 1px;
+        background-size:
+          100% 1px,
+          100% 1px;
       }
 
       .form-group input:-webkit-autofill,
@@ -299,7 +333,9 @@
         align-items: center;
       }
 
-      .pw-wrap input { padding-right: 32px; }
+      .pw-wrap input {
+        padding-right: 32px;
+      }
 
       .toggle-pw {
         position: absolute;
@@ -314,7 +350,9 @@
         transition: color 0.25s var(--ease);
       }
 
-      .toggle-pw:hover { color: var(--c-gold); }
+      .toggle-pw:hover {
+        color: var(--c-gold);
+      }
 
       /* ─── Errors ─────────────────────────────────────────────── */
       .field-error {
@@ -360,15 +398,15 @@
         overflow: hidden;
         z-index: 0;
         transition:
-          color      0.42s var(--ease),
+          color 0.42s var(--ease),
           border-color 0.42s var(--ease),
-          transform  0.22s var(--spring),
+          transform 0.22s var(--spring),
           box-shadow 0.3s var(--ease);
       }
 
       /* gold fill sweeps in from left */
       .btn-auth::before {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         background: var(--c-gold);
@@ -401,7 +439,9 @@
 
       /* ─── Responsive ─────────────────────────────────────────── */
       @media (max-width: 860px) {
-        .auth-page { grid-template-columns: 1fr; }
+        .auth-page {
+          grid-template-columns: 1fr;
+        }
 
         .auth-brand {
           border-right: none;
@@ -415,11 +455,22 @@
           bottom: -40px;
         }
 
-        .brand-center { padding: 52px 0 28px; }
+        .brand-center {
+          padding: 52px 0 28px;
+        }
 
-        .brand-headline { font-size: clamp(46px, 10vw, 68px); }
+        .brand-headline {
+          font-size: clamp(46px, 10vw, 68px);
+        }
 
-        .brand-footer { display: none; }
+        .brand-sub {
+          white-space: normal;
+          max-width: 400px;
+        }
+
+        .brand-footer {
+          display: none;
+        }
 
         .auth-panel {
           padding: 60px 36px 80px;
@@ -428,16 +479,23 @@
       }
 
       @media (max-width: 480px) {
-        .auth-brand { padding: 40px 28px; }
-        .auth-brand::after { display: none; }
-        .auth-panel { padding: 52px 24px 68px; }
-        .auth-card { max-width: 100%; }
+        .auth-brand {
+          padding: 40px 28px;
+        }
+        .auth-brand::after {
+          display: none;
+        }
+        .auth-panel {
+          padding: 52px 24px 68px;
+        }
+        .auth-card {
+          max-width: 100%;
+        }
       }
     </style>
   </head>
   <body>
     <div class="auth-page">
-
       <!-- Left: brand panel -->
       <div class="auth-brand">
         <span class="brand-logo">Passionis</span>
@@ -445,22 +503,20 @@
         <div class="brand-center">
           <p class="brand-eyebrow">SS 2025 Collection</p>
           <h1 class="brand-headline">
-            Fashion<br /><em>is a form</em><br />of art.
+            Fashion <em>is a form of art</em><br />
           </h1>
           <p class="brand-sub">
-            Curated pieces for those who treat<br />
-            every day as a runway. Create your<br />
-            account to explore the collection.
+            Curated pieces for those who treat every day as a runway. Create
+            your account to explore the collection.
           </p>
         </div>
 
-        <p class="brand-footer">&copy; 2025 Passionis. All rights reserved.</p>
+        <!-- <p class="brand-footer">&copy; 2025 Passionis. All rights reserved.</p> -->
       </div>
 
       <!-- Right: auth forms -->
       <div class="auth-panel">
         <div class="auth-card">
-
           <!-- Tabs -->
           <div class="auth-tabs">
             <button class="auth-tab active" data-tab="login">Log In</button>
@@ -472,14 +528,28 @@
             <span class="global-info" id="login-global-info"></span>
             <div class="form-group">
               <label for="login-email">Email Address</label>
-              <input type="email" id="login-email" name="email" autocomplete="email" />
+              <input
+                type="email"
+                id="login-email"
+                name="email"
+                autocomplete="email"
+              />
               <span class="field-error" id="login-email-error"></span>
             </div>
             <div class="form-group">
               <label for="login-password">Password</label>
               <div class="pw-wrap">
-                <input type="password" id="login-password" name="password" autocomplete="current-password" />
-                <button type="button" class="toggle-pw" aria-label="Show password">
+                <input
+                  type="password"
+                  id="login-password"
+                  name="password"
+                  autocomplete="current-password"
+                />
+                <button
+                  type="button"
+                  class="toggle-pw"
+                  aria-label="Show password"
+                >
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
@@ -493,19 +563,38 @@
           <form id="signup-form" class="auth-form" novalidate hidden>
             <div class="form-group">
               <label for="signup-name">Full Name</label>
-              <input type="text" id="signup-name" name="name" autocomplete="name" />
+              <input
+                type="text"
+                id="signup-name"
+                name="name"
+                autocomplete="name"
+              />
               <span class="field-error" id="signup-name-error"></span>
             </div>
             <div class="form-group">
               <label for="signup-email">Email Address</label>
-              <input type="email" id="signup-email" name="email" autocomplete="email" />
+              <input
+                type="email"
+                id="signup-email"
+                name="email"
+                autocomplete="email"
+              />
               <span class="field-error" id="signup-email-error"></span>
             </div>
             <div class="form-group">
               <label for="signup-password">Password</label>
               <div class="pw-wrap">
-                <input type="password" id="signup-password" name="password" autocomplete="new-password" />
-                <button type="button" class="toggle-pw" aria-label="Show password">
+                <input
+                  type="password"
+                  id="signup-password"
+                  name="password"
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="toggle-pw"
+                  aria-label="Show password"
+                >
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
@@ -514,8 +603,17 @@
             <div class="form-group">
               <label for="signup-confirm">Confirm Password</label>
               <div class="pw-wrap">
-                <input type="password" id="signup-confirm" name="confirmPassword" autocomplete="new-password" />
-                <button type="button" class="toggle-pw" aria-label="Show password">
+                <input
+                  type="password"
+                  id="signup-confirm"
+                  name="confirmPassword"
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="toggle-pw"
+                  aria-label="Show password"
+                >
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
@@ -524,7 +622,6 @@
             <span class="global-error" id="signup-global-error"></span>
             <button type="submit" class="btn-auth">Sign Up</button>
           </form>
-
         </div>
       </div>
     </div>
