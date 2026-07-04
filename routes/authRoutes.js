@@ -3,7 +3,7 @@ const bcrypt   = require('bcryptjs');
 const jwt      = require('jsonwebtoken');
 const crypto   = require('crypto');
 const { pool } = require('../models/db');
-const { sendVerificationEmail } = require('../models/mailer');
+const { sendVerificationEmail, sendPasswordResetEmail } = require('../models/mailer');
 
 const router = express.Router();
 
@@ -87,6 +87,76 @@ router.get('/verify', async (req, res) => {
   } catch (err) {
     console.error('[verify]', err.message);
     res.redirect('/login.html?verify_error=1');
+  }
+});
+
+/* POST /api/auth/forgot-password */
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email)
+      return res.status(400).json({ error: 'Email is required.' });
+
+    const genericMessage = 'If an account exists for that email, a password reset link has been sent.';
+
+    const { rows } = await pool.query(
+      'SELECT id, name FROM users WHERE email = $1',
+      [email.toLowerCase()]
+    );
+
+    if (!rows.length) return res.json({ message: genericMessage });
+
+    const token = crypto.randomBytes(32).toString('hex');
+    await pool.query(
+      `UPDATE users SET reset_token = $1, reset_token_expires = NOW() + INTERVAL '1 hour'
+       WHERE id = $2`,
+      [token, rows[0].id]
+    );
+
+    const resetUrl = `${req.protocol}://${req.get('host')}/reset-password.html?token=${token}`;
+
+    res.json({ message: genericMessage });
+
+    sendPasswordResetEmail(email.toLowerCase(), rows[0].name, resetUrl)
+      .catch((err) => console.error('[forgot-password] reset email failed:', err.message));
+  } catch (err) {
+    console.error('[forgot-password]', err.message);
+    res.status(500).json({ error: 'Something went wrong. Please try again.' });
+  }
+});
+
+/* POST /api/auth/reset-password */
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { token, password, confirmPassword } = req.body;
+
+    if (!token || !password || !confirmPassword)
+      return res.status(400).json({ error: 'All fields are required.' });
+
+    if (password.length < 8)
+      return res.status(400).json({ error: 'Password must be at least 8 characters.' });
+
+    if (password !== confirmPassword)
+      return res.status(400).json({ error: 'Passwords do not match.' });
+
+    const { rows } = await pool.query(
+      'SELECT id FROM users WHERE reset_token = $1 AND reset_token_expires > NOW()',
+      [token]
+    );
+    if (!rows.length)
+      return res.status(400).json({ error: 'This reset link is invalid or has expired.' });
+
+    const hash = await bcrypt.hash(password, 12);
+    await pool.query(
+      `UPDATE users SET password = $1, reset_token = NULL, reset_token_expires = NULL
+       WHERE id = $2`,
+      [hash, rows[0].id]
+    );
+
+    res.json({ message: 'Password updated. You can now log in.' });
+  } catch (err) {
+    console.error('[reset-password]', err.message);
+    res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 });
 

@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
   } else if (params.get('verify_error') === '1') {
     infoEl.textContent   = 'That verification link is invalid or has expired.';
     infoEl.style.display = 'block';
+  } else if (params.get('reset') === '1') {
+    infoEl.textContent   = 'Password reset! You can now log in.';
+    infoEl.style.display = 'block';
   }
 
   /* ── Tab switching ────────────────────────────────────────────── */

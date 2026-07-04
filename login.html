@@ -354,6 +354,22 @@
         color: var(--c-gold);
       }
 
+      /* ─── Forgot-password link ───────────────────────────────── */
+      .forgot-link {
+        align-self: flex-end;
+        margin-top: -20px;
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: rgba(240, 237, 230, 0.36);
+        text-decoration: none;
+        transition: color 0.25s var(--ease);
+      }
+
+      .forgot-link:hover {
+        color: var(--c-gold);
+      }
+
       /* ─── Errors ─────────────────────────────────────────────── */
       .field-error {
         display: none;
@@ -555,6 +571,7 @@
               </div>
               <span class="field-error" id="login-password-error"></span>
             </div>
+            <a href="/forgot-password.html" class="forgot-link">Forgot password?</a>
             <span class="global-error" id="login-global-error"></span>
             <button type="submit" class="btn-auth">Log In</button>
           </form>

@@ -48,10 +48,12 @@ app.get('/login.html', (req, res, next) => {
   }
 });
 
-/* ── Protect all HTML pages (except /login.html) ───────────────── */
+/* ── Protect all HTML pages (except public auth pages) ──────────── */
+const PUBLIC_PAGES = ['/login.html', '/forgot-password.html', '/reset-password.html'];
+
 app.use((req, res, next) => {
   const isHtml   = req.path === '/' || req.path.endsWith('.html');
-  const isPublic = req.path === '/login.html';
+  const isPublic = PUBLIC_PAGES.includes(req.path);
 
   if (!isHtml || isPublic) return next();
 
