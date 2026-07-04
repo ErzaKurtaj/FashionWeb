@@ -1,7 +1,9 @@
-const express = require('express');
-const bcrypt  = require('bcryptjs');
-const jwt     = require('jsonwebtoken');
+const express  = require('express');
+const bcrypt   = require('bcryptjs');
+const jwt      = require('jsonwebtoken');
+const crypto   = require('crypto');
 const { pool } = require('../models/db');
+const { sendVerificationEmail } = require('../models/mailer');
 
 const router = express.Router();
 
@@ -37,17 +39,41 @@ router.post('/signup', async (req, res) => {
     if (existing.rows.length > 0)
       return res.status(409).json({ error: 'An account with that email already exists.' });
 
-    const hash = await bcrypt.hash(password, 12);
+    const hash  = await bcrypt.hash(password, 12);
+    const token = crypto.randomBytes(32).toString('hex');
+
     const { rows } = await pool.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name',
-      [name, email.toLowerCase(), hash]
+      `INSERT INTO users (name, email, password, is_verified, verification_token)
+       VALUES ($1, $2, $3, FALSE, $4) RETURNING id, name`,
+      [name, email.toLowerCase(), hash, token]
     );
 
-    res.cookie('token', signToken(rows[0].id), COOKIE_OPTS);
-    res.status(201).json({ message: 'Account created.', name: rows[0].name });
+    const verifyUrl = `${req.protocol}://${req.get('host')}/api/auth/verify?token=${token}`;
+    await sendVerificationEmail(email.toLowerCase(), rows[0].name, verifyUrl);
+
+    res.status(201).json({ message: 'Account created. Please check your email to verify your account.' });
   } catch (err) {
     console.error('[signup]', err.message);
     res.status(500).json({ error: 'Server error. Please try again.' });
+  }
+});
+
+/* GET /api/auth/verify */
+router.get('/verify', async (req, res) => {
+  const { token } = req.query;
+  if (!token) return res.redirect('/login.html?verify_error=1');
+
+  try {
+    const { rows } = await pool.query(
+      'UPDATE users SET is_verified = TRUE, verification_token = NULL WHERE verification_token = $1 RETURNING id',
+      [token]
+    );
+    if (!rows.length) return res.redirect('/login.html?verify_error=1');
+
+    res.redirect('/login.html?verified=1');
+  } catch (err) {
+    console.error('[verify]', err.message);
+    res.redirect('/login.html?verify_error=1');
   }
 });
 
@@ -60,7 +86,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required.' });
 
     const { rows } = await pool.query(
-      'SELECT id, name, password FROM users WHERE email = $1',
+      'SELECT id, name, password, is_verified FROM users WHERE email = $1',
       [email.toLowerCase()]
     );
     if (!rows.length)
@@ -70,6 +96,9 @@ router.post('/login', async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match)
       return res.status(401).json({ error: 'Invalid email or password.' });
+
+    if (!user.is_verified)
+      return res.status(403).json({ error: 'Please verify your email before logging in.' });
 
     res.cookie('token', signToken(user.id), COOKIE_OPTS);
     res.json({ message: 'Logged in.', name: user.name });

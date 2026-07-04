@@ -1,5 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  /* ── Query-param status messages ─────────────────────────────── */
+  const params = new URLSearchParams(window.location.search);
+  const infoEl = document.getElementById('login-global-info');
+
+  if (params.get('verified') === '1') {
+    infoEl.textContent   = 'Email verified! You can now log in.';
+    infoEl.style.display = 'block';
+  } else if (params.get('justSignedUp') === '1') {
+    infoEl.textContent   = 'Account created! Check your email to verify your account before logging in.';
+    infoEl.style.display = 'block';
+  } else if (params.get('verify_error') === '1') {
+    infoEl.textContent   = 'That verification link is invalid or has expired.';
+    infoEl.style.display = 'block';
+  }
+
   /* ── Tab switching ────────────────────────────────────────────── */
   const tabs       = document.querySelectorAll('.auth-tab');
   const loginForm  = document.getElementById('login-form');
@@ -179,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      window.location.href = '/';
+      window.location.href = '/login.html?justSignedUp=1';
     } catch {
       showError('signup-global-error', 'Something went wrong. Please try again.');
       btn.disabled    = false;

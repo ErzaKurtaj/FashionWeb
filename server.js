@@ -12,6 +12,8 @@ const { searchProducts }     = require('./models/products');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('trust proxy', 1);
+
 /* ── PostgreSQL ─────────────────────────────────────────────────── */
 initDb().catch(err => { console.error('Database error:', err.message); process.exit(1); });
 

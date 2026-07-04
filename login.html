@@ -333,6 +333,15 @@
         padding: 2px 0;
       }
 
+      .global-info {
+        display: none;
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        color: var(--c-gold);
+        text-align: center;
+        padding: 2px 0;
+      }
+
       /* ─── Submit button ──────────────────────────────────────── */
       .btn-auth {
         width: 100%;
@@ -460,6 +469,7 @@
 
           <!-- Login form -->
           <form id="login-form" class="auth-form" novalidate>
+            <span class="global-info" id="login-global-info"></span>
             <div class="form-group">
               <label for="login-email">Email Address</label>
               <input type="email" id="login-email" name="email" autocomplete="email" />
