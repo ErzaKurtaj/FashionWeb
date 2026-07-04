@@ -26,6 +26,9 @@ router.post('/signup', async (req, res) => {
     if (!name || !email || !password || !confirmPassword)
       return res.status(400).json({ error: 'All fields are required.' });
 
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return res.status(400).json({ error: 'Please register with a real email address.' });
+
     if (password.length < 8)
       return res.status(400).json({ error: 'Password must be at least 8 characters.' });
 
@@ -54,7 +57,7 @@ router.post('/signup', async (req, res) => {
     res.status(201).json({ message: 'Account created. Please check your email to verify your account.' });
   } catch (err) {
     console.error('[signup]', err.message);
-    res.status(500).json({ error: 'Server error. Please try again.' });
+    res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 });
 

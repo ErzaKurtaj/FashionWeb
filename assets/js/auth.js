@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
       showError('signup-email-error', 'Please enter your email address.');
       valid = false;
     } else if (!signupForm.querySelector('#signup-email').validity.valid) {
-      showError('signup-email-error', 'Please enter a valid email address.');
+      showError('signup-email-error', 'Please register with a real email address.');
       valid = false;
     }
 
