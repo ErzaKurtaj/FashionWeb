@@ -52,9 +52,11 @@ router.post('/signup', async (req, res) => {
     );
 
     const verifyUrl = `${req.protocol}://${req.get('host')}/api/auth/verify?token=${token}`;
-    await sendVerificationEmail(email.toLowerCase(), rows[0].name, verifyUrl);
 
     res.status(201).json({ message: 'Account created. Please check your email to verify your account.' });
+
+    sendVerificationEmail(email.toLowerCase(), rows[0].name, verifyUrl)
+      .catch((err) => console.error('[signup] verification email failed:', err.message));
   } catch (err) {
     console.error('[signup]', err.message);
     res.status(500).json({ error: 'Something went wrong. Please try again.' });
