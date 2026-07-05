@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────────────────
    PASSIONIS — main.js
    Handles: header scroll state, scroll-reveal, dropdowns, hamburger,
-            training modal, and details-page cart logic.
+            training modal, and site search. Cart logic lives in cart.js.
 ───────────────────────────────────────────────────────────────────────── */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -153,175 +153,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ── Details page: size selection, quantity, cart ─────────────────── */
-  const assetBase = window.location.pathname.includes('/pages/') ? '../' : '';
-  let selectedSize = localStorage.getItem('selectedSize') || null;
-  let itemCount = 1;
-
-  function escapeHtml(str) {
-    return String(str ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  /* ── Size selection ───────────────────────────────────────────────── */
-  const sizeOptionsContainer = document.querySelector('.size-options');
-  let sizeErrorEl = null;
-
-  if (sizeOptionsContainer) {
-    sizeErrorEl = document.createElement('p');
-    sizeErrorEl.className = 'size-error';
-    sizeErrorEl.textContent = 'Please select a size to continue.';
-    sizeErrorEl.style.cssText =
-      'display:none;color:var(--c-accent);font-size:11px;letter-spacing:.06em;margin-top:8px;';
-    sizeOptionsContainer.insertAdjacentElement('afterend', sizeErrorEl);
-
-    sizeOptionsContainer.addEventListener('click', function (e) {
-      if (e.target.tagName === 'SPAN') {
-        selectSize(e.target);
-        if (sizeErrorEl) sizeErrorEl.style.display = 'none';
-      }
-    });
-
-    /* Restore previously selected size */
-    if (selectedSize) {
-      const el = Array.from(sizeOptionsContainer.querySelectorAll('span'))
-        .find(s => s.textContent.trim() === selectedSize);
-      if (el) el.classList.add('selected');
-    }
-  }
-
-  function requireSize() {
-    if (selectedSize) return true;
-    if (sizeErrorEl) sizeErrorEl.style.display = 'block';
-    sizeOptionsContainer && sizeOptionsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    return false;
-  }
-
-  /* ── Quantity stepper ─────────────────────────────────────────────── */
-  const qtyDisplay = document.getElementById('quantity-display');
-  if (qtyDisplay) qtyDisplay.textContent = itemCount;
-
-  const plusBtn  = document.querySelector('.plus-btn');
-  const minusBtn = document.querySelector('.minus-btn');
-
-  if (plusBtn) {
-    plusBtn.addEventListener('click', function () {
-      if (!requireSize()) return;
-      incrementItem();
-      addToCart('LONG SKIRT AND TOP', '39.95 EUR', assetBase + 'assets/images/set.jpg', selectedSize);
-    });
-  }
-
-  if (minusBtn) {
-    minusBtn.addEventListener('click', function () {
-      if (itemCount <= 1) return;
-      decrementItem();
-      removeFromCart();
-    });
-  }
-
-  const addToCartBtn = document.querySelector('.add-to-cart');
-  if (addToCartBtn) {
-    addToCartBtn.addEventListener('click', function () {
-      if (!requireSize()) return;
-      addToCart('LONG SKIRT AND TOP', '39.95 EUR', assetBase + 'assets/images/set.jpg', selectedSize);
-    });
-  }
-
-  function addToCart(name, price, image, size) {
-    const container = document.getElementById('cart-items');
-    if (!container) return;
-    const el = document.createElement('div');
-    el.className = 'cart-item';
-    const img = document.createElement('img');
-    img.src = escapeHtml(image);
-    img.alt = escapeHtml(name);
-    const info = document.createElement('div');
-    info.innerHTML =
-      `<p>${escapeHtml(name)}</p>` +
-      `<p>${escapeHtml(price)}</p>` +
-      `<p>Size: ${escapeHtml(size)}</p>`;
-    el.appendChild(img);
-    el.appendChild(info);
-    container.appendChild(el);
-    saveCart();
-    updateCartCount(1);
-  }
-
-  function removeFromCart() {
-    const container = document.getElementById('cart-items');
-    if (container && container.children.length > 0) {
-      container.removeChild(container.lastChild);
-      saveCart();
-      updateCartCount(-1);
-    }
-  }
-
-  function updateCartCount(delta) {
-    const badge = document.getElementById('cart-count');
-    if (!badge) return;
-    const next = Math.max(0, (parseInt(badge.textContent) || 0) + delta);
-    badge.textContent = next;
-    localStorage.setItem('cartCount', next);
-  }
-
-  function incrementItem() {
-    itemCount++;
-    if (qtyDisplay) qtyDisplay.textContent = itemCount;
-  }
-
-  function decrementItem() {
-    if (itemCount > 1) {
-      itemCount--;
-      if (qtyDisplay) qtyDisplay.textContent = itemCount;
-    }
-  }
-
-  function saveCart() {
-    const container = document.getElementById('cart-items');
-    if (!container) return;
-    const items = Array.from(container.querySelectorAll('.cart-item')).map(el => ({
-      name:  el.querySelector('div p:first-child')?.textContent,
-      price: el.querySelector('div p:nth-child(2)')?.textContent,
-      image: el.querySelector('img')?.getAttribute('src'),
-      size:  el.querySelector('div p:last-child')?.textContent?.split(': ')[1],
-    }));
-    localStorage.setItem('cartItems', JSON.stringify(items));
-  }
-
-  function loadCart() {
-    const items   = JSON.parse(localStorage.getItem('cartItems') || '[]');
-    const count   = parseInt(localStorage.getItem('cartCount')) || 0;
-    const container = document.getElementById('cart-items');
-    const badge   = document.getElementById('cart-count');
-
-    if (badge) badge.textContent = count;
-
-    if (container) {
-      items.forEach(function (item) {
-        const el = document.createElement('div');
-        el.className = 'cart-item';
-        const img = document.createElement('img');
-        img.src = escapeHtml(item.image);
-        img.alt = escapeHtml(item.name);
-        const info = document.createElement('div');
-        info.innerHTML =
-          `<p>${escapeHtml(item.name)}</p>` +
-          `<p>${escapeHtml(item.price)}</p>` +
-          `<p>Size: ${escapeHtml(item.size)}</p>`;
-        el.appendChild(img);
-        el.appendChild(info);
-        container.appendChild(el);
-      });
-    }
-  }
-
-  loadCart();
-  if (qtyDisplay) qtyDisplay.textContent = itemCount;
-
   /* ── Grid view toggle (3 / 2 columns) ───────────────────────── */
   document.querySelectorAll('.grid-toggle').forEach(function (toggle) {
     const container = toggle.closest('.items-section').querySelector('.items-container');
@@ -361,6 +192,11 @@ document.addEventListener('DOMContentLoaded', function () {
         emailEl.className = 'account-email';
         emailEl.textContent = data.email;
 
+        const ordersLink = document.createElement('a');
+        ordersLink.className = 'account-orders-link';
+        ordersLink.textContent = 'My Orders';
+        ordersLink.href = (window.location.pathname.includes('/pages/') ? '' : 'pages/') + 'orders.html';
+
         const signOutBtn = document.createElement('button');
         signOutBtn.className = 'btn-sign-out';
         signOutBtn.textContent = 'Sign Out';
@@ -372,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
         panel.appendChild(greeting);
         panel.appendChild(nameEl);
         panel.appendChild(emailEl);
+        panel.appendChild(ordersLink);
         panel.appendChild(signOutBtn);
 
         userDropdown.innerHTML = '';
@@ -556,10 +393,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }).join('');
   }
 });
-
-/* selectSize is global so details.html inline onclick="selectSize(this)" works */
-window.selectSize = function (el) {
-  document.querySelectorAll('.size-options span').forEach(s => s.classList.remove('selected'));
-  el.classList.add('selected');
-  localStorage.setItem('selectedSize', el.textContent.trim());
-};

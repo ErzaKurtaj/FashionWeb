@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../assets/css/search.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/cart.js" defer></script>
 </head>
 <body>
   <header>
@@ -98,11 +99,6 @@
 
   <div id="cart-dropdown" class="dropdown-content">
     <div id="cart-items"></div>
-    <div class="cart-actions" style="display:flex;align-items:center;gap:0;padding:16px 0 0;">
-      <button class="qty-btn minus-btn">−</button>
-      <span class="item-count" id="quantity-display" style="width:52px;height:44px;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--c-line);border-bottom:1px solid var(--c-line);font-size:14px;">1</span>
-      <button class="qty-btn plus-btn">+</button>
-    </div>
   </div>
 
   <main>
@@ -134,16 +130,16 @@
         <div class="sizes">
           <p>Select Size</p>
           <div class="size-options">
-            <span onclick="selectSize(this)">XS</span>
-            <span onclick="selectSize(this)">S</span>
-            <span onclick="selectSize(this)">M</span>
-            <span onclick="selectSize(this)">L</span>
-            <span onclick="selectSize(this)">XL</span>
-            <span onclick="selectSize(this)">XXL</span>
+            <span>XS</span>
+            <span>S</span>
+            <span>M</span>
+            <span>L</span>
+            <span>XL</span>
+            <span>XXL</span>
           </div>
         </div>
 
-        <button class="add-to-cart">ADD TO CART</button>
+        <button class="add-to-cart" data-id="1" data-name="Long Skirt and Top" data-price="39.95 EUR" data-image="/assets/images/set.jpg">ADD TO CART</button>
         <button class="wishlist-btn"><i class="far fa-heart"></i>&nbsp; Add to Wishlist</button>
 
         <div class="product-info">

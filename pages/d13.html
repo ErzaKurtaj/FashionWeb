@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Page</title>
     <link rel="stylesheet" href="../assets/css/details.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"> 
-    <script src="../assets/js/m13.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/cart.js" defer></script>
 </head>
 <body>
     <header>
@@ -48,11 +49,6 @@
     </div>
     <div id="cart-dropdown" class="dropdown-content">
         <div id="cart-items"></div>
-        <div class="cart-actions">
-            <button class="minus-btn" onclick="decrementItem()">-</button>
-            <span class="item-count">1</span>
-            <button class="plus-btn" onclick="incrementItem()">+</button>
-        </div>
     </div>
     </div>
     <div class="details-container">
@@ -71,15 +67,15 @@
             <div class="sizes">
                 <p>COLOR: I bardhë | 3152/320</p>
                 <div class="size-options">
-                    <span onclick="selectSize(this)">XS</span>
-                    <span onclick="selectSize(this)">S</span>
-                    <span onclick="selectSize(this)">M</span>
-                    <span onclick="selectSize(this)">L</span>
-                    <span onclick="selectSize(this)">XL</span>
-                    <span onclick="selectSize(this)">XXL</span>
+                    <span>XS</span>
+                    <span>S</span>
+                    <span>M</span>
+                    <span>L</span>
+                    <span>XL</span>
+                    <span>XXL</span>
                 </div>
             </div>
-            <button class="add-to-cart">ADD TO CART</button>
+            <button class="add-to-cart" data-id="13" data-name="Blazer & Skirt" data-price="65.95 EUR" data-image="/assets/images/STREET.jpg">ADD TO CART</button>
         </div>
     </div>
 </body>

@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Page</title>
     <link rel="stylesheet" href="../assets/css/details.css">
-    <script src="../assets/js/m2.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/cart.js" defer></script>
 </head>
 <body>
     <header>
@@ -48,11 +50,7 @@
     </div>
     <div id="cart-dropdown" class="dropdown-content">
         <div id="cart-items"></div>
-        <div class="cart-actions">
-            <button class="minus-btn" onclick="decrementItem()">-</button>
-            <span class="item-count">1</span>
-            <button class="plus-btn" onclick="incrementItem()">+</button>
-        </div>
+
     </div>
     </div>
     <div class="details-container">
@@ -66,20 +64,20 @@
         </div>
         <div class="details">
             <h1>CUTE PINK DRESS</h1>
-            <p>29.95 EUR</p>
+            <p>25.95 EUR</p>
             <p>This adorable pink dress features a flattering A-line silhouette with a cinched waist and delicate lace details. The lightweight fabric and charming square neckline make it perfect for any occasion, offering both comfort and style.</p>
             <div class="sizes">
                 <p>COLOR: PINK | 3152/320</p>
                 <div class="size-options">
-                    <span onclick="selectSize(this)">XS</span>
-                    <span onclick="selectSize(this)">S</span>
-                    <span onclick="selectSize(this)">M</span>
-                    <span onclick="selectSize(this)">L</span>
-                    <span onclick="selectSize(this)">XL</span>
-                    <span onclick="selectSize(this)">XXL</span>
+                    <span>XS</span>
+                    <span>S</span>
+                    <span>M</span>
+                    <span>L</span>
+                    <span>XL</span>
+                    <span>XXL</span>
                 </div>
             </div>
-            <button class="add-to-cart">SHTO</button>
+            <button class="add-to-cart" data-id="2" data-name="Cute Pink Dress" data-price="25.95 EUR" data-image="/assets/images/cute.jpg">ADD TO CART</button>
         </div>
     </div>
 

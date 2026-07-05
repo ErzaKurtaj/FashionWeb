@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const jwt          = require('jsonwebtoken');
 const authRoutes             = require('./routes/authRoutes');
 const chatRoutes             = require('./routes/chatRoutes');
+const cartRoutes             = require('./routes/cartRoutes');
+const orderRoutes            = require('./routes/orderRoutes');
 const { initDb }             = require('./models/db');
 const { searchProducts }     = require('./models/products');
 
@@ -27,6 +29,12 @@ app.use('/api/auth', authRoutes);
 
 /* ── Chat API ───────────────────────────────────────────────────── */
 app.use('/api/chat', chatRoutes);
+
+/* ── Cart API ───────────────────────────────────────────────────── */
+app.use('/api/cart', cartRoutes);
+
+/* ── Order / checkout API ────────────────────────────────────────── */
+app.use('/api', orderRoutes);
 
 /* ── Search API ─────────────────────────────────────────────────── */
 app.get('/api/search', (req, res) => {

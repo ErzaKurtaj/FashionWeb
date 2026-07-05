@@ -411,7 +411,15 @@ header.scrolled .hamburger-btn {
 .account-email {
   font-size: 11px;
   color: var(--c-mid);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+}
+
+.account-orders-link {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--c-accent);
+  text-decoration: underline;
+  margin-bottom: 16px;
 }
 
 .btn-sign-out {
