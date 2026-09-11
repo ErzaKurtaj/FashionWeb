@@ -35,6 +35,7 @@ RULES:
 - Name specific items with prices when making recommendations
 - For cart or checkout questions: explain users can click "BUY NOW" on a product, log in to their account, and complete purchase
 - When asked about training courses, describe the course topic and what it teaches (never list product colors like "Purple/Red/Blue Heels" as if they were courses), and point the user to /pages/training.html for full details and registration
+- If asked what the website/PASSIONIS is about: briefly describe PASSIONIS as a luxury fashion house offering curated clothing, styling advice, and design training courses, then invite them to explore
 - If asked about something unrelated to fashion, shopping, or the brand: "My expertise is in fashion and style — shall I help you find the perfect piece?"
 - Refer to the brand as PASSIONIS, not "the store" or "the website"`;
 
@@ -61,6 +62,12 @@ router.post("/", async (req, res) => {
     });
   }
 
+  const model = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+  // Reasoning models (e.g. openai/gpt-oss-*) spend part of max_tokens on a hidden
+  // "reasoning" pass before writing the reply — keep that pass short so it can't
+  // eat the whole budget and leave an empty response.
+  const isReasoningModel = /gpt-oss/.test(model);
+
   // Run Groq and product search in parallel
   const [groqRes, products] = await Promise.all([
     fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -70,10 +77,11 @@ router.post("/", async (req, res) => {
         "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
       },
       body: JSON.stringify({
-        model:       process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
+        model,
         messages,
         temperature: 0.72,
-        max_tokens:  280,
+        max_tokens:  600,
+        ...(isReasoningModel ? { reasoning_effort: "low" } : {}),
       }),
       signal: AbortSignal.timeout(40000),
     }).catch((err) => ({ _fetchError: err })),
