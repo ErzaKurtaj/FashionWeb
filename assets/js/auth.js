@@ -132,6 +132,39 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  /* ── Guest / demo login ───────────────────────────────────────── */
+  const guestBtn = document.getElementById('guest-login-btn');
+  if (guestBtn) {
+    guestBtn.addEventListener('click', async function () {
+      showError('login-global-error', '');
+      guestBtn.disabled = true;
+      const original = guestBtn.textContent;
+      guestBtn.textContent = 'Signing in…';
+
+      try {
+        const res  = await fetch('/api/auth/login', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ email: 'demo@passionis.com', password: 'Demo1234' }),
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError('login-global-error', data.error || 'Guest sign-in failed. Please try again.');
+          guestBtn.disabled    = false;
+          guestBtn.textContent = original;
+          return;
+        }
+
+        window.location.href = '/';
+      } catch {
+        showError('login-global-error', 'Something went wrong. Please try again.');
+        guestBtn.disabled    = false;
+        guestBtn.textContent = original;
+      }
+    });
+  }
+
   /* ── Signup submission ────────────────────────────────────────── */
   signupForm.addEventListener('submit', async function (e) {
     e.preventDefault();

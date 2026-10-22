@@ -396,6 +396,56 @@
         padding: 2px 0;
       }
 
+      /* ─── Demo access ────────────────────────────────────────── */
+      .demo-banner {
+        margin-bottom: 40px;
+        padding: 18px 20px;
+        border: 1px solid var(--c-gold-d);
+        background: rgba(201, 168, 112, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .demo-banner-text {
+        font-size: 11px;
+        line-height: 1.7;
+        letter-spacing: 0.02em;
+        color: var(--c-muted);
+      }
+
+      .demo-banner-text strong {
+        color: var(--c-gold);
+        font-weight: 500;
+      }
+
+      .btn-guest {
+        width: 100%;
+        background: transparent;
+        color: var(--c-cream);
+        border: 1px solid var(--c-line);
+        font-family: var(--f-sans);
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        padding: 14px;
+        cursor: pointer;
+        transition:
+          border-color 0.3s var(--ease),
+          color 0.3s var(--ease);
+      }
+
+      .btn-guest:hover:not(:disabled) {
+        border-color: var(--c-gold);
+        color: var(--c-gold);
+      }
+
+      .btn-guest:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
       /* ─── Submit button ──────────────────────────────────────── */
       .btn-auth {
         width: 100%;
@@ -533,6 +583,16 @@
       <!-- Right: auth forms -->
       <div class="auth-panel">
         <div class="auth-card">
+          <!-- Demo access -->
+          <div class="demo-banner">
+            <p class="demo-banner-text">
+              Demo account: <strong>demo@passionis.com</strong> / <strong>Demo1234</strong>
+            </p>
+            <button type="button" class="btn-guest" id="guest-login-btn">
+              Continue as Guest
+            </button>
+          </div>
+
           <!-- Tabs -->
           <div class="auth-tabs">
             <button class="auth-tab active" data-tab="login">Log In</button>

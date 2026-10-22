@@ -6,6 +6,7 @@
     <title>Passionis</title>
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/search.css" />
+    <link rel="stylesheet" href="assets/css/mood.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -18,6 +19,12 @@
     <script src="assets/js/main.js" defer></script>
     <script src="assets/js/cart.js" defer></script>
     <script src="assets/js/chat.js" defer></script>
+    <script src="assets/js/mood.js" defer></script>
+    <script
+      src="https://unpkg.com/three@0.160.0/build/three.min.js"
+      defer
+    ></script>
+    <script src="assets/js/capsule.js" defer></script>
   </head>
   <body>
     <header>
@@ -298,6 +305,156 @@
             <button onclick="location.href = 'pages/training.html'">
               View More
             </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOOD TICKER -->
+      <div class="mood-ticker" aria-hidden="true">
+        <div class="mood-ticker-track">
+          <span>Emotion</span><span class="t-sep">◆</span>
+          <span>Identity</span><span class="t-sep">◆</span>
+          <span>Wardrobe</span><span class="t-sep">◆</span>
+          <span>Expression</span><span class="t-sep">◆</span>
+          <span>Mood</span><span class="t-sep">◆</span>
+          <span>Form</span><span class="t-sep">◆</span>
+          <span>Feeling</span><span class="t-sep">◆</span>
+          <span>Silhouette</span><span class="t-sep">◆</span>
+          <span>Texture</span><span class="t-sep">◆</span>
+          <span>Restraint</span><span class="t-sep">◆</span>
+          <!-- duplicate for seamless loop -->
+          <span>Emotion</span><span class="t-sep">◆</span>
+          <span>Identity</span><span class="t-sep">◆</span>
+          <span>Wardrobe</span><span class="t-sep">◆</span>
+          <span>Expression</span><span class="t-sep">◆</span>
+          <span>Mood</span><span class="t-sep">◆</span>
+          <span>Form</span><span class="t-sep">◆</span>
+          <span>Feeling</span><span class="t-sep">◆</span>
+          <span>Silhouette</span><span class="t-sep">◆</span>
+          <span>Texture</span><span class="t-sep">◆</span>
+          <span>Restraint</span><span class="t-sep">◆</span>
+        </div>
+      </div>
+
+      <!-- MOOD SELECTOR -->
+      <section class="mood-select" id="mood-select">
+        <div class="mood-select-inner">
+          <div class="mood-select-head">
+            <div>
+              <span class="section-label">Mood Wardrobe</span>
+              <h2>How do you feel today?</h2>
+            </div>
+            <p class="mood-select-hint">Choose your current emotional state</p>
+          </div>
+
+          <div class="mood-grid">
+            <button class="mood-btn" data-mood="elegant">
+              <div class="mood-btn-fill"></div>
+              <span class="mood-btn-index">01</span>
+              <span class="mood-btn-title">Elegant</span>
+              <span class="mood-btn-meta">Structure · Restraint</span>
+            </button>
+            <button class="mood-btn" data-mood="calm">
+              <div class="mood-btn-fill"></div>
+              <span class="mood-btn-index">02</span>
+              <span class="mood-btn-title">Calm</span>
+              <span class="mood-btn-meta">Softness · Balance</span>
+            </button>
+            <button class="mood-btn" data-mood="confident">
+              <div class="mood-btn-fill"></div>
+              <span class="mood-btn-index">03</span>
+              <span class="mood-btn-title">Confident</span>
+              <span class="mood-btn-meta">Strength · Presence</span>
+            </button>
+            <button class="mood-btn" data-mood="melancholic">
+              <div class="mood-btn-fill"></div>
+              <span class="mood-btn-index">04</span>
+              <span class="mood-btn-title">Melancholic</span>
+              <span class="mood-btn-meta">Fluidity · Quiet</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- WARDROBE RESULTS -->
+      <section class="mood-results" id="mood-wardrobe">
+        <div class="mood-results-left">
+          <span class="label">Selected state</span>
+          <h2 id="moodStateTitle">—</h2>
+          <p id="moodStateCaption"></p>
+          <div id="moodChips" class="mood-chips"></div>
+        </div>
+
+        <div class="mood-results-right">
+          <div class="mood-carousel">
+            <button class="nav prev" aria-label="Previous">‹</button>
+            <div class="mood-carousel-stage">
+              <div class="mood-index-watermark" id="moodIndexWatermark" aria-hidden="true">01</div>
+              <div class="mood-carousel-track" id="moodCarouselTrack">
+                <!-- looks injected by mood.js -->
+              </div>
+            </div>
+            <button class="nav next" aria-label="Next">›</button>
+            <div class="mood-carousel-counter">
+              <span class="c-cur" id="moodCarouselCurrent">—</span>
+              <span class="c-slash">/</span>
+              <span id="moodCarouselTotal">—</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTE INTERPRETER -->
+      <section class="mood-note" id="mood-note">
+        <p class="mood-note-label">Note</p>
+        <h3 class="mood-note-title">What do you feel drawn to today?</h3>
+        <div class="mood-note-input-wrap">
+          <input
+            type="text"
+            id="moodNoteInput"
+            placeholder="black blazer · hoodie and pants · soft neutrals"
+          />
+          <button id="moodNoteSubmit" type="button">Interpret</button>
+        </div>
+        <p class="mood-note-response" id="moodNoteResponse"></p>
+        <div class="mood-note-cards" id="moodInterpretationCards" hidden></div>
+      </section>
+
+      <!-- CAPSULE (3D walk-through) -->
+      <section class="vc" id="capsule" aria-label="PASSIONIS Capsule">
+        <div class="vc-stage" id="vcStage" aria-hidden="true"></div>
+        <div class="vc-fallback" id="vcFallback" aria-hidden="true"></div>
+        <div class="vc-ui">
+          <div class="vc-top">
+            <div class="vc-title">Capsule<small>Edit 01</small></div>
+            <button class="vc-bagbtn" type="button" aria-label="Bag">Bag (<span id="vcBagN">0</span>)</button>
+          </div>
+          <div class="vc-mid">
+            <div class="vc-panel" role="group" aria-label="Selected piece">
+              <div class="vc-count" id="vcCount"></div>
+              <h3 class="vc-name" id="vcName"></h3>
+              <div class="vc-price" id="vcPrice"></div>
+              <p class="vc-desc" id="vcDesc"></p>
+              <fieldset class="vc-sizes">
+                <legend>Size</legend>
+                <label class="vc-size"><input type="radio" name="vcSize" value="XS" /><span>XS</span></label>
+                <label class="vc-size"><input type="radio" name="vcSize" value="S" /><span>S</span></label>
+                <label class="vc-size"><input type="radio" name="vcSize" value="M" checked /><span>M</span></label>
+                <label class="vc-size"><input type="radio" name="vcSize" value="L" /><span>L</span></label>
+                <label class="vc-size"><input type="radio" name="vcSize" value="XL" /><span>XL</span></label>
+              </fieldset>
+              <button class="vc-add" type="button" id="vcAdd">Add to bag</button>
+              <div class="vc-msg" id="vcMsg" aria-live="polite"></div>
+              <div class="vc-concept">A first look at Capsule 01 — walk through it, then check back when it releases.</div>
+            </div>
+          </div>
+          <div class="vc-bottom">
+            <div class="vc-arrows">
+              <button type="button" id="vcPrev" aria-label="Previous piece">←</button>
+              <button type="button" id="vcNext" aria-label="Next piece">→</button>
+            </div>
+            <div class="vc-dots" id="vcDots" role="group" aria-label="Pieces"></div>
+            <div class="vc-hint">Scroll, drag or use the arrow keys</div>
           </div>
         </div>
       </section>

@@ -8,7 +8,7 @@ const authRoutes             = require('./routes/authRoutes');
 const chatRoutes             = require('./routes/chatRoutes');
 const cartRoutes             = require('./routes/cartRoutes');
 const orderRoutes            = require('./routes/orderRoutes');
-const { initDb }             = require('./models/db');
+const { initDb, ensureDemoUser } = require('./models/db');
 const { searchProducts }     = require('./models/products');
 
 const app  = express();
@@ -17,7 +17,9 @@ const PORT = process.env.PORT || 3000;
 app.set('trust proxy', 1);
 
 /* ── PostgreSQL ─────────────────────────────────────────────────── */
-initDb().catch(err => { console.error('Database error:', err.message); process.exit(1); });
+initDb()
+  .then(ensureDemoUser)
+  .catch(err => { console.error('Database error:', err.message); process.exit(1); });
 
 /* ── Core middleware ────────────────────────────────────────────── */
 app.use(express.json());

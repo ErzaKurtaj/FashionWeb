@@ -1,9 +1,13 @@
-const { Pool } = require('pg');
+const { Pool }  = require('pg');
+const bcrypt    = require('bcryptjs');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
+
+const DEMO_EMAIL    = 'demo@passionis.com';
+const DEMO_PASSWORD = 'Demo1234';
 
 async function initDb() {
   await pool.query(`
@@ -62,4 +66,21 @@ async function initDb() {
   console.log('  PostgreSQL ready');
 }
 
-module.exports = { pool, initDb };
+// Creates the "Continue as guest" demo account if it doesn't exist yet.
+// Inserted directly as pre-verified — it never goes through the signup/email
+// flow, so no verification email is ever sent for it.
+async function ensureDemoUser() {
+  const { rows } = await pool.query('SELECT id FROM users WHERE email = $1', [DEMO_EMAIL]);
+  if (rows.length) return;
+
+  const hash = await bcrypt.hash(DEMO_PASSWORD, 12);
+  await pool.query(
+    `INSERT INTO users (name, email, password, is_verified)
+     VALUES ($1, $2, $3, TRUE)
+     ON CONFLICT (email) DO NOTHING`,
+    ['Demo Guest', DEMO_EMAIL, hash]
+  );
+  console.log('  Demo account ready (demo@passionis.com)');
+}
+
+module.exports = { pool, initDb, ensureDemoUser, DEMO_EMAIL, DEMO_PASSWORD };
