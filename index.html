@@ -146,15 +146,259 @@
     <main>
       <section class="hero">
         <div class="hero-content">
-          <img
-            src="assets/images/finalshot.png"
-            alt="Fashion"
-            class="hero-image"
-          />
+          <img src="assets/images/pic1.jpg" alt="Fashion" class="hero-image" />
         </div>
         <div class="overlay-text">
           <h1>FASHION</h1>
           <span class="hero-sub">SS 2025 Collection</span>
+        </div>
+      </section>
+
+      <!-- MOOD SELECTOR -->
+      <section class="mood-select" id="mood-select">
+        <div class="mood-split">
+          <!-- LEFT: linen panel -->
+          <div class="mood-left">
+            <div class="mood-eyebrow-row">
+              <span class="mood-eyebrow-brand">Passionis</span>
+              <div class="mood-rule"></div>
+              <span class="mood-eyebrow-sub">Mood Wardrobe — SS 2025</span>
+            </div>
+
+            <div class="mood-headline">
+              <h2 class="mood-headline-text mood-headline-text-oneline">
+                <span>How Do <em>You</em> Want To <em>Feel</em> Today?</span>
+              </h2>
+              <p class="mood-headline-sub">
+                Dress for the feeling you want. Choose a mood and your wardrobe
+                follows.
+              </p>
+            </div>
+
+            <div class="mood-rows" id="moodRows">
+              <button
+                class="mood-row"
+                data-mood="serene"
+                data-image="assets/images/redpic.jpg"
+                data-descriptor="Softness · Light"
+              >
+                <span class="mood-row-bar"></span>
+                <span class="mood-row-index">01</span>
+                <span class="mood-row-main">
+                  <span class="mood-row-title">Serene</span>
+                  <span class="mood-row-meta-mobile">Softness · Light</span>
+                </span>
+                <span class="mood-row-side">
+                  <span class="mood-row-meta">Softness · Light</span>
+                  <span class="mood-row-arrow" aria-hidden="true">↗</span>
+                </span>
+              </button>
+              <button
+                class="mood-row"
+                data-mood="effortless"
+                data-image="assets/images/effortless.jpg"
+                data-descriptor="Colour · Movement"
+              >
+                <span class="mood-row-bar"></span>
+                <span class="mood-row-index">02</span>
+                <span class="mood-row-main">
+                  <span class="mood-row-title">Effortless</span>
+                  <span class="mood-row-meta-mobile">Colour · Movement</span>
+                </span>
+                <span class="mood-row-side">
+                  <span class="mood-row-meta">Colour · Movement</span>
+                  <span class="mood-row-arrow" aria-hidden="true">↗</span>
+                </span>
+              </button>
+              <button
+                class="mood-row"
+                data-mood="bold"
+                data-image="assets/images/confident2.png"
+                data-descriptor="Strength · Presence"
+              >
+                <span class="mood-row-bar"></span>
+                <span class="mood-row-index">03</span>
+                <span class="mood-row-main">
+                  <span class="mood-row-title">Bold</span>
+                  <span class="mood-row-meta-mobile">Strength · Presence</span>
+                </span>
+                <span class="mood-row-side">
+                  <span class="mood-row-meta">Strength · Presence</span>
+                  <span class="mood-row-arrow" aria-hidden="true">↗</span>
+                </span>
+              </button>
+              <button
+                class="mood-row"
+                data-mood="reflective"
+                data-image="assets/images/guy.jpg"
+                data-descriptor="Depth · Quiet"
+              >
+                <span class="mood-row-bar"></span>
+                <span class="mood-row-index">04</span>
+                <span class="mood-row-main">
+                  <span class="mood-row-title">Reflective</span>
+                  <span class="mood-row-meta-mobile">Depth · Quiet</span>
+                </span>
+                <span class="mood-row-side">
+                  <span class="mood-row-meta">Depth · Quiet</span>
+                  <span class="mood-row-arrow" aria-hidden="true">↗</span>
+                </span>
+              </button>
+            </div>
+
+            <div class="mood-bottom">
+              <span class="mood-bottom-label">01 — 04</span>
+              <div class="mood-rule"></div>
+              <span class="mood-bottom-label mood-bottom-label-desktop"
+                >Choose your state of mind</span
+              >
+              <span class="mood-bottom-label mood-bottom-label-mobile"
+                >Mood Wardrobe</span
+              >
+            </div>
+
+            <!-- mobile: tap-to-reveal thumbnail (desktop uses the right panel instead) -->
+            <div class="mood-mobile-thumb" id="moodMobileThumb" hidden>
+              <img
+                data-mood="serene"
+                src="assets/images/redpic.jpg"
+                alt="Serene mood"
+              />
+              <img
+                data-mood="effortless"
+                src="assets/images/effortless.jpg"
+                alt="Effortless mood"
+              />
+              <img
+                data-mood="bold"
+                src="assets/images/confident2.png"
+                alt="Bold mood"
+              />
+              <img
+                data-mood="reflective"
+                src="assets/images/guy.jpg"
+                alt="Reflective mood"
+              />
+              <div class="mood-mobile-thumb-fade"></div>
+              <div class="mood-mobile-thumb-caption">
+                <div
+                  class="mood-mobile-thumb-title"
+                  id="moodMobileThumbTitle"
+                ></div>
+                <div
+                  class="mood-mobile-thumb-desc"
+                  id="moodMobileThumbDesc"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: forest panel (desktop only) -->
+          <div class="mood-right" id="moodRight">
+            <div class="mood-right-images">
+              <img
+                data-mood="serene"
+                src="assets/images/redpic.jpg"
+                alt="Serene mood"
+              />
+              <img
+                data-mood="effortless"
+                src="assets/images/effortless.jpg"
+                alt="Effortless mood"
+              />
+              <img
+                data-mood="bold"
+                src="assets/images/confident2.png"
+                alt="Bold mood"
+              />
+              <img
+                data-mood="reflective"
+                src="assets/images/guy.jpg"
+                alt="Reflective mood"
+              />
+            </div>
+
+            <div class="mood-right-vignette-bottom"></div>
+            <div class="mood-right-vignette-top"></div>
+
+            <div class="mood-right-captions">
+              <div class="mood-right-caption" data-mood="serene">
+                <div class="mood-right-caption-rule"></div>
+                <div class="mood-right-caption-title">Serene</div>
+                <div class="mood-right-caption-desc">Softness · Light</div>
+              </div>
+              <div class="mood-right-caption" data-mood="effortless">
+                <div class="mood-right-caption-rule"></div>
+                <div class="mood-right-caption-title">Effortless</div>
+                <div class="mood-right-caption-desc">Colour · Movement</div>
+              </div>
+              <div class="mood-right-caption" data-mood="bold">
+                <div class="mood-right-caption-rule"></div>
+                <div class="mood-right-caption-title">Bold</div>
+                <div class="mood-right-caption-desc">Strength · Presence</div>
+              </div>
+              <div class="mood-right-caption" data-mood="reflective">
+                <div class="mood-right-caption-rule"></div>
+                <div class="mood-right-caption-title">Reflective</div>
+                <div class="mood-right-caption-desc">Depth · Quiet</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WARDROBE RESULTS -->
+      <section class="mood-results" id="mood-wardrobe">
+        <div class="mood-results-left">
+          <span class="mood-results-eyebrow">Selected State</span>
+          <h2 id="moodStateTitle">—</h2>
+          <p id="moodStateCaption"></p>
+
+          <span class="mood-results-specs-label">Palette</span>
+          <div id="moodChips" class="mood-chips"></div>
+        </div>
+
+        <div class="mood-results-right">
+          <div class="mood-plate">
+            <div class="mood-plate-frame">
+              <div class="mood-carousel-track" id="moodCarouselTrack">
+                <!-- looks injected by mood.js -->
+              </div>
+            </div>
+            <span
+              class="mood-plate-mark mood-plate-mark-tl"
+              aria-hidden="true"
+            ></span>
+            <span
+              class="mood-plate-mark mood-plate-mark-tr"
+              aria-hidden="true"
+            ></span>
+            <span
+              class="mood-plate-mark mood-plate-mark-bl"
+              aria-hidden="true"
+            ></span>
+            <span
+              class="mood-plate-mark mood-plate-mark-br"
+              aria-hidden="true"
+            ></span>
+
+            <div class="mood-plate-caption">
+              <span class="mood-plate-index"
+                >Plate <span id="moodCarouselCurrent">—</span>/<span
+                  id="moodCarouselTotal"
+                  >—</span
+                ></span
+              >
+              <div class="mood-plate-nav">
+                <button class="mood-plate-arrow prev" aria-label="Previous">
+                  ←
+                </button>
+                <button class="mood-plate-arrow next" aria-label="Next">
+                  →
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -164,14 +408,16 @@
           <h2>THE LATEST TRENDS</h2>
           <div class="grid-toggle" aria-label="Change grid layout">
             <span class="grid-toggle-label">View</span>
-            <button class="grid-btn active" data-cols="4">4</button>
+            <button class="grid-btn active" data-cols="5">5</button>
             <span class="grid-toggle-sep">/</span>
-            <button class="grid-btn" data-cols="3">3</button>
+            <button class="grid-btn" data-cols="4">4</button>
           </div>
         </div>
-        <div class="items-container grid-4">
+        <div class="items-container grid-5">
           <div class="item reveal" data-delay="1">
-            <img src="assets/images/dress.jpg" alt="Trendy Dresses" />
+            <div class="item-media">
+              <img src="assets/images/dress.jpg" alt="Trendy Dresses" />
+            </div>
             <h3>TRENDY DRESSES</h3>
             <p>
               Explore our collection of stylish dresses perfect for any
@@ -182,7 +428,9 @@
             </button>
           </div>
           <div class="item reveal" data-delay="2">
-            <img src="assets/images/oldmoney.jpg" alt="Old Money Style" />
+            <div class="item-media">
+              <img src="assets/images/oldmoney.jpg" alt="Old Money Style" />
+            </div>
             <h3>OLD MONEY STYLE</h3>
             <p>
               Embrace the classic and sophisticated "Old Money" aesthetic with
@@ -193,7 +441,9 @@
             </button>
           </div>
           <div class="item reveal" data-delay="3">
-            <img src="assets/images/chic.jpg" alt="Elegant Clothes" />
+            <div class="item-media">
+              <img src="assets/images/chic.jpg" alt="Elegant Clothes" />
+            </div>
             <h3>ELEGANT CLOTHES</h3>
             <p>
               Refined and chic options that add sophistication to your look, for
@@ -204,7 +454,9 @@
             </button>
           </div>
           <div class="item reveal" data-delay="4">
-            <img src="assets/images/simple.jpg" alt="Simple Clothes" />
+            <div class="item-media">
+              <img src="assets/images/simple.jpg" alt="Simple Clothes" />
+            </div>
             <h3>SIMPLE CLOTHES</h3>
             <p>
               Minimalist designs that are versatile and easy to style for any
@@ -215,7 +467,9 @@
             </button>
           </div>
           <div class="item reveal" data-delay="5">
-            <img src="assets/images/wedding.jpg" alt="Wedding Clothes" />
+            <div class="item-media">
+              <img src="assets/images/wedding.jpg" alt="Wedding Clothes" />
+            </div>
             <h3>WEDDING CLOTHES</h3>
             <p>
               Make your special day memorable with our exquisite bridal and
@@ -228,20 +482,97 @@
         </div>
       </section>
 
-      <section class="items-section">
+      <!-- CAPSULE (3D walk-through) -->
+      <section class="vc" id="capsule" aria-label="PASSIONIS Capsule">
+        <div class="vc-stage" id="vcStage" aria-hidden="true"></div>
+        <div class="vc-fallback" id="vcFallback" aria-hidden="true"></div>
+        <div class="vc-ui">
+          <div class="vc-top">
+            <div class="vc-title">Capsule<small>Edit 01</small></div>
+            <button class="vc-bagbtn" type="button" aria-label="Bag">
+              Bag (<span id="vcBagN">0</span>)
+            </button>
+          </div>
+          <div class="vc-mid">
+            <div class="vc-panel" role="group" aria-label="Selected piece">
+              <div class="vc-count" id="vcCount"></div>
+              <h3 class="vc-name" id="vcName"></h3>
+              <div class="vc-price" id="vcPrice"></div>
+              <p class="vc-desc" id="vcDesc"></p>
+              <fieldset class="vc-sizes">
+                <legend>Size</legend>
+                <label class="vc-size"
+                  ><input type="radio" name="vcSize" value="XS" /><span
+                    >XS</span
+                  ></label
+                >
+                <label class="vc-size"
+                  ><input type="radio" name="vcSize" value="S" /><span
+                    >S</span
+                  ></label
+                >
+                <label class="vc-size"
+                  ><input type="radio" name="vcSize" value="M" checked /><span
+                    >M</span
+                  ></label
+                >
+                <label class="vc-size"
+                  ><input type="radio" name="vcSize" value="L" /><span
+                    >L</span
+                  ></label
+                >
+                <label class="vc-size"
+                  ><input type="radio" name="vcSize" value="XL" /><span
+                    >XL</span
+                  ></label
+                >
+              </fieldset>
+              <button class="vc-add" type="button" id="vcAdd">
+                Add to bag
+              </button>
+              <div class="vc-msg" id="vcMsg" aria-live="polite"></div>
+              <div class="vc-concept">
+                A first look at Capsule 01 — walk through it, then check back
+                when it releases.
+              </div>
+            </div>
+          </div>
+          <div class="vc-bottom">
+            <div class="vc-arrows">
+              <button type="button" id="vcPrev" aria-label="Previous piece">
+                ←
+              </button>
+              <button type="button" id="vcNext" aria-label="Next piece">
+                →
+              </button>
+            </div>
+            <div
+              class="vc-dots"
+              id="vcDots"
+              role="group"
+              aria-label="Pieces"
+            ></div>
+            <div class="vc-hint">Drag or use the arrow keys</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="items-section" id="shoes-design">
         <div class="section-head">
           <span class="section-label">Design &amp; Craftsmanship</span>
           <h2>SHOES DESIGN</h2>
           <div class="grid-toggle" aria-label="Change grid layout">
             <span class="grid-toggle-label">View</span>
-            <button class="grid-btn active" data-cols="4">4</button>
+            <button class="grid-btn active" data-cols="5">5</button>
             <span class="grid-toggle-sep">/</span>
-            <button class="grid-btn" data-cols="3">3</button>
+            <button class="grid-btn" data-cols="4">4</button>
           </div>
         </div>
-        <div class="items-container grid-4">
+        <div class="items-container grid-5">
           <div class="item reveal" data-delay="1">
-            <img src="assets/images/1.jpg" alt="Purple Heels" />
+            <div class="item-media">
+              <img src="assets/images/1.jpg" alt="Purple Heels" />
+            </div>
             <h3>Purple Heels</h3>
             <p>
               Add a pop of color with these stunning purple heels. Perfect for a
@@ -252,7 +583,9 @@
             </button>
           </div>
           <div class="item reveal" data-delay="2">
-            <img src="assets/images/red.jpg" alt="Red Heels" />
+            <div class="item-media">
+              <img src="assets/images/red.jpg" alt="Red Heels" />
+            </div>
             <h3>Red Heels</h3>
             <p>
               Make a striking impression with our red heels — drama and elegance
@@ -263,18 +596,9 @@
             </button>
           </div>
           <div class="item reveal" data-delay="3">
-            <img src="assets/images/LV.jpg" alt="Black Heels" />
-            <h3>Black Heels</h3>
-            <p>
-              A timeless classic. Our black heels feature elegant, versatile
-              designs for any occasion.
-            </p>
-            <button onclick="location.href = 'pages/training.html'">
-              View More
-            </button>
-          </div>
-          <div class="item reveal" data-delay="4">
-            <img src="assets/images/SL.jpg" alt="Brown Heels" />
+            <div class="item-media">
+              <img src="assets/images/SL.jpg" alt="Brown Heels" />
+            </div>
             <h3>Brown Heels</h3>
             <p>
               Sophisticated and stylish — perfect for an understated yet chic
@@ -284,8 +608,10 @@
               View More
             </button>
           </div>
-          <div class="item reveal" data-delay="5">
-            <img src="assets/images/blue.jpg" alt="Blue Heels" />
+          <div class="item reveal" data-delay="4">
+            <div class="item-media">
+              <img src="assets/images/blue.jpg" alt="Blue Heels" />
+            </div>
             <h3>Blue Heels</h3>
             <p>
               Stand out with our unique blue heels — a touch of uniqueness to
@@ -295,8 +621,10 @@
               View More
             </button>
           </div>
-          <div class="item reveal" data-delay="6">
-            <img src="assets/images/result.jpg" alt="Drawing" />
+          <div class="item reveal" data-delay="5">
+            <div class="item-media">
+              <img src="assets/images/result.jpg" alt="Drawing" />
+            </div>
             <h3>Drawing</h3>
             <p>
               Discover the art of shoe design with our exclusive concept
@@ -309,167 +637,40 @@
         </div>
       </section>
 
-      <!-- MOOD TICKER -->
-      <div class="mood-ticker" aria-hidden="true">
-        <div class="mood-ticker-track">
-          <span>Emotion</span><span class="t-sep">◆</span>
-          <span>Identity</span><span class="t-sep">◆</span>
-          <span>Wardrobe</span><span class="t-sep">◆</span>
-          <span>Expression</span><span class="t-sep">◆</span>
-          <span>Mood</span><span class="t-sep">◆</span>
-          <span>Form</span><span class="t-sep">◆</span>
-          <span>Feeling</span><span class="t-sep">◆</span>
-          <span>Silhouette</span><span class="t-sep">◆</span>
-          <span>Texture</span><span class="t-sep">◆</span>
-          <span>Restraint</span><span class="t-sep">◆</span>
-          <!-- duplicate for seamless loop -->
-          <span>Emotion</span><span class="t-sep">◆</span>
-          <span>Identity</span><span class="t-sep">◆</span>
-          <span>Wardrobe</span><span class="t-sep">◆</span>
-          <span>Expression</span><span class="t-sep">◆</span>
-          <span>Mood</span><span class="t-sep">◆</span>
-          <span>Form</span><span class="t-sep">◆</span>
-          <span>Feeling</span><span class="t-sep">◆</span>
-          <span>Silhouette</span><span class="t-sep">◆</span>
-          <span>Texture</span><span class="t-sep">◆</span>
-          <span>Restraint</span><span class="t-sep">◆</span>
-        </div>
-      </div>
+      <section class="testimonials">
+        <div class="testimonials-bar">
+          <span class="testimonials-quote-mark" aria-hidden="true"
+            >&ldquo;</span
+          >
 
-      <!-- MOOD SELECTOR -->
-      <section class="mood-select" id="mood-select">
-        <div class="mood-select-inner">
-          <div class="mood-select-head">
-            <div>
-              <span class="section-label">Mood Wardrobe</span>
-              <h2>How do you feel today?</h2>
-            </div>
-            <p class="mood-select-hint">Choose your current emotional state</p>
-          </div>
-
-          <div class="mood-grid">
-            <button class="mood-btn" data-mood="elegant">
-              <div class="mood-btn-fill"></div>
-              <span class="mood-btn-index">01</span>
-              <span class="mood-btn-title">Elegant</span>
-              <span class="mood-btn-meta">Structure · Restraint</span>
-            </button>
-            <button class="mood-btn" data-mood="calm">
-              <div class="mood-btn-fill"></div>
-              <span class="mood-btn-index">02</span>
-              <span class="mood-btn-title">Calm</span>
-              <span class="mood-btn-meta">Softness · Balance</span>
-            </button>
-            <button class="mood-btn" data-mood="confident">
-              <div class="mood-btn-fill"></div>
-              <span class="mood-btn-index">03</span>
-              <span class="mood-btn-title">Confident</span>
-              <span class="mood-btn-meta">Strength · Presence</span>
-            </button>
-            <button class="mood-btn" data-mood="melancholic">
-              <div class="mood-btn-fill"></div>
-              <span class="mood-btn-index">04</span>
-              <span class="mood-btn-title">Melancholic</span>
-              <span class="mood-btn-meta">Fluidity · Quiet</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- WARDROBE RESULTS -->
-      <section class="mood-results" id="mood-wardrobe">
-        <div class="mood-results-left">
-          <span class="label">Selected state</span>
-          <h2 id="moodStateTitle">—</h2>
-          <p id="moodStateCaption"></p>
-          <div id="moodChips" class="mood-chips"></div>
-        </div>
-
-        <div class="mood-results-right">
-          <div class="mood-carousel">
-            <button class="nav prev" aria-label="Previous">‹</button>
-            <div class="mood-carousel-stage">
-              <div class="mood-index-watermark" id="moodIndexWatermark" aria-hidden="true">01</div>
-              <div class="mood-carousel-track" id="moodCarouselTrack">
-                <!-- looks injected by mood.js -->
+          <div class="testimonials-track">
+            <div class="testimonials-item is-active">
+              <p class="testimonials-text">
+                Amazing designs and great quality.
+              </p>
+              <div class="testimonials-meta">
+                <span class="testimonials-stars" aria-hidden="true">★★★★★</span>
+                <span class="testimonials-author">Jane Doe</span>
               </div>
             </div>
-            <button class="nav next" aria-label="Next">›</button>
-            <div class="mood-carousel-counter">
-              <span class="c-cur" id="moodCarouselCurrent">—</span>
-              <span class="c-slash">/</span>
-              <span id="moodCarouselTotal">—</span>
+            <div class="testimonials-item">
+              <p class="testimonials-text">
+                I love the tutorials — detailed and easy to follow.
+              </p>
+              <div class="testimonials-meta">
+                <span class="testimonials-stars" aria-hidden="true">★★★★★</span>
+                <span class="testimonials-author">John Smith</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- NOTE INTERPRETER -->
-      <section class="mood-note" id="mood-note">
-        <p class="mood-note-label">Note</p>
-        <h3 class="mood-note-title">What do you feel drawn to today?</h3>
-        <div class="mood-note-input-wrap">
-          <input
-            type="text"
-            id="moodNoteInput"
-            placeholder="black blazer · hoodie and pants · soft neutrals"
-          />
-          <button id="moodNoteSubmit" type="button">Interpret</button>
-        </div>
-        <p class="mood-note-response" id="moodNoteResponse"></p>
-        <div class="mood-note-cards" id="moodInterpretationCards" hidden></div>
-      </section>
-
-      <!-- CAPSULE (3D walk-through) -->
-      <section class="vc" id="capsule" aria-label="PASSIONIS Capsule">
-        <div class="vc-stage" id="vcStage" aria-hidden="true"></div>
-        <div class="vc-fallback" id="vcFallback" aria-hidden="true"></div>
-        <div class="vc-ui">
-          <div class="vc-top">
-            <div class="vc-title">Capsule<small>Edit 01</small></div>
-            <button class="vc-bagbtn" type="button" aria-label="Bag">Bag (<span id="vcBagN">0</span>)</button>
+          <div class="testimonials-nav">
+            <button
+              class="testimonials-dot is-active"
+              aria-label="Review 1"
+            ></button>
+            <button class="testimonials-dot" aria-label="Review 2"></button>
           </div>
-          <div class="vc-mid">
-            <div class="vc-panel" role="group" aria-label="Selected piece">
-              <div class="vc-count" id="vcCount"></div>
-              <h3 class="vc-name" id="vcName"></h3>
-              <div class="vc-price" id="vcPrice"></div>
-              <p class="vc-desc" id="vcDesc"></p>
-              <fieldset class="vc-sizes">
-                <legend>Size</legend>
-                <label class="vc-size"><input type="radio" name="vcSize" value="XS" /><span>XS</span></label>
-                <label class="vc-size"><input type="radio" name="vcSize" value="S" /><span>S</span></label>
-                <label class="vc-size"><input type="radio" name="vcSize" value="M" checked /><span>M</span></label>
-                <label class="vc-size"><input type="radio" name="vcSize" value="L" /><span>L</span></label>
-                <label class="vc-size"><input type="radio" name="vcSize" value="XL" /><span>XL</span></label>
-              </fieldset>
-              <button class="vc-add" type="button" id="vcAdd">Add to bag</button>
-              <div class="vc-msg" id="vcMsg" aria-live="polite"></div>
-              <div class="vc-concept">A first look at Capsule 01 — walk through it, then check back when it releases.</div>
-            </div>
-          </div>
-          <div class="vc-bottom">
-            <div class="vc-arrows">
-              <button type="button" id="vcPrev" aria-label="Previous piece">←</button>
-              <button type="button" id="vcNext" aria-label="Next piece">→</button>
-            </div>
-            <div class="vc-dots" id="vcDots" role="group" aria-label="Pieces"></div>
-            <div class="vc-hint">Scroll, drag or use the arrow keys</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="testimonials">
-        <h2>Customer Testimonials</h2>
-        <div class="testimonial reveal">
-          <p>"Amazing designs and great quality!"</p>
-          <p class="testimonial-author">— Jane Doe</p>
-        </div>
-        <div class="testimonial reveal" data-delay="2">
-          <p>
-            "I love the tutorials. They are very detailed and easy to follow."
-          </p>
-          <p class="testimonial-author">— John Smith</p>
         </div>
       </section>
     </main>

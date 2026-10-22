@@ -85,6 +85,24 @@ app.use(express.static(path.join(__dirname)));
 /* ── Fallback ───────────────────────────────────────────────────── */
 app.get('*', (req, res) => res.redirect('/'));
 
+/* ── Error handler ─────────────────────────────────────────────────
+   Catches anything thrown by earlier middleware that no route-level
+   try/catch handled — most commonly a malformed JSON request body, which
+   express.json() rejects before any route runs. Without this, Express
+   falls back to its default HTML stack-trace page: API clients (cart.js,
+   auth.js, etc.) can't parse that as JSON, so a perfectly diagnosable
+   error (e.g. "invalid JSON body") surfaces to the user as a generic
+   "Cart request failed." with no indication of what actually went wrong —
+   and the HTML page itself leaks server file paths. Keep this last. ──── */
+app.use((err, req, res, next) => {
+  console.error('[unhandled]', err.message);
+  const status = err.status || err.statusCode || 500;
+  if (req.path.startsWith('/api/')) {
+    return res.status(status).json({ error: 'Something went wrong. Please try again.' });
+  }
+  res.status(status).send('Something went wrong. Please try again.');
+});
+
 app.listen(PORT, () => {
   console.log(`\n  Passionis server running at http://localhost:${PORT}\n`);
 });

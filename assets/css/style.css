@@ -491,6 +491,7 @@ header.scrolled .hamburger-btn {
   width: 100%;
   height: 100vh;
   object-fit: cover;
+  object-position: center 29%;
 }
 .hero {
   background: url("images/design.jpg") center/cover no-repeat;
@@ -564,15 +565,22 @@ header.scrolled .hamburger-btn {
    ITEMS SECTION
 ───────────────────────────────────── */
 .items-section {
-  padding: 108px 80px;
+  padding: 10px 80px 0;
   background: var(--c-bg);
+}
+
+/* Last items-section on the homepage, right before Testimonials — give it
+   a bit of breathing room instead of running straight into the next
+   section (every other .items-section stays flush, by design). */
+#shoes-design {
+  margin-bottom: 40px;
 }
 
 /* Section heading + view toggle row */
 .section-head {
   position: relative;
   text-align: center;
-  margin-bottom: 64px;
+  margin-bottom: 32px;
 }
 
 .section-head .section-label {
@@ -582,6 +590,7 @@ header.scrolled .hamburger-btn {
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--c-accent);
+  margin-top: 16px;
   margin-bottom: 14px;
 }
 
@@ -593,15 +602,16 @@ header.scrolled .hamburger-btn {
   text-transform: uppercase;
   color: var(--c-dark);
   position: relative;
+  display: inline-block;
 }
 
 .section-head h2::after {
   content: "";
   display: block;
-  width: 32px;
+  width: 100%;
   height: 1px;
   background: var(--c-accent);
-  margin: 18px auto 0;
+  margin: 0 auto;
 }
 
 /* View toggle: 3 / 2 */
@@ -670,9 +680,14 @@ header.scrolled .hamburger-btn {
 /* Grid layouts */
 .items-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  counter-reset: item-index;
   transition: grid-template-columns 0.2s var(--ease);
+}
+
+.items-container.grid-5 {
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .items-container.grid-4 {
@@ -697,6 +712,7 @@ header.scrolled .hamburger-btn {
   overflow: hidden;
   background: var(--c-white);
   cursor: pointer;
+  counter-increment: item-index;
   transition:
     transform 0.36s var(--ease),
     box-shadow 0.36s var(--ease);
@@ -709,7 +725,7 @@ header.scrolled .hamburger-btn {
   border: 1px solid transparent;
   transition: border-color 0.36s var(--ease);
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .item:hover {
@@ -718,39 +734,130 @@ header.scrolled .hamburger-btn {
 }
 
 .item:hover::after {
-  border-color: var(--c-line);
+  border-color: var(--c-accent);
 }
 
+/* Index tag — "01", "02"… drawn from CSS counters, no markup needed.
+   Anchored to .item-media so it sits over the photo's own bottom edge,
+   not the bottom of the whole card (text sits below the image, not
+   overlaid on it, so .item's own box is the wrong frame of reference). */
+.item-media {
+  position: relative;
+  overflow: hidden;
+}
+
+.item-media::before {
+  content: "0" counter(item-index);
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  z-index: 2;
+  font-family: var(--f-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.4s var(--ease),
+    transform 0.4s var(--ease);
+  pointer-events: none;
+}
+
+.item:hover .item-media::before {
+  opacity: 0.85;
+  transform: translateY(0);
+}
+
+/* Entrance wipe + hover zoom/duotone: a second, slightly slower reveal
+   layered under the card's own fade-up (.reveal), so the photo unveils
+   itself rather than simply fading in with everything else. */
 .item img {
   width: 100%;
   height: 400px;
   object-fit: cover;
-  transition: transform 0.7s var(--ease);
+  display: block;
+  filter: grayscale(55%);
+  clip-path: inset(0 0 0 0);
+  transition:
+    transform 0.9s var(--ease),
+    filter 0.6s var(--ease),
+    clip-path 1s var(--ease) 0.1s;
 }
+
+.item.reveal img {
+  clip-path: inset(0 0 100% 0);
+}
+
+.item.reveal.visible img {
+  clip-path: inset(0 0 0% 0);
+}
+
 .item:hover img {
-  transform: scale(1.04);
+  transform: scale(1.045);
+  filter: grayscale(0%);
 }
 
 .item h3 {
+  position: relative;
+  display: inline-block;
   font-family: var(--f-serif);
   font-size: 19px;
   font-weight: 500;
+  line-height: 1.3;
   letter-spacing: 0.04em;
   color: var(--c-dark);
-  padding: 22px 24px 8px;
+  padding: 22px 24px 10px;
   margin: 0;
+  /* Reserve room for two lines always, so a one-line title ("TRENDY
+     DRESSES") and a two-line one ("OLD MONEY STYLE") push the button
+     to the exact same position instead of drifting with title length. */
+  min-height: 84px;
+  box-sizing: border-box;
 }
 
+.item h3::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 3px;
+  height: 1px;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+
+.item:hover h3::after {
+  transform: scaleX(1);
+}
+
+/* Description stays collapsed until hover — the card opens up instead
+   of presenting everything at once. */
 .item > p {
   font-size: 13px;
   line-height: 1.75;
   color: var(--c-mid);
   padding: 0 24px;
   margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.5s var(--ease),
+    opacity 0.4s var(--ease);
+}
+
+.item:hover > p {
+  max-height: 120px;
+  opacity: 1;
 }
 
 .item > button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   margin: 18px 24px 26px;
   padding: 10px 28px;
   background: transparent;
@@ -772,46 +879,147 @@ header.scrolled .hamburger-btn {
   box-shadow: inset 300px 0 0 0 var(--c-dark);
 }
 
+.item > button::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 8px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.item > button:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 /* ─────────────────────────────────────
    TESTIMONIALS
 ───────────────────────────────────── */
 .testimonials {
+  position: relative;
   background: #2e2925;
-  padding: 112px 80px;
-  text-align: center;
+  padding: 46px 80px;
+  overflow: hidden;
 }
 
-.testimonials h2 {
+/* faint ambient warmth, echoes the hero's dark-section treatment elsewhere */
+.testimonials::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 140% at 0% 50%, rgba(160, 117, 82, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.testimonials-bar {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.testimonials-quote-mark {
+  flex-shrink: 0;
   font-family: var(--f-serif);
-  font-size: clamp(24px, 2.8vw, 38px);
-  font-weight: 300;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 72px;
+  font-size: 68px;
+  line-height: 1;
+  color: var(--c-accent);
+  opacity: 0.5;
 }
 
-.testimonial {
-  max-width: 640px;
-  margin: 0 auto 60px;
+.testimonials-track {
+  position: relative;
+  flex: 1;
+  min-height: 72px;
 }
 
-.testimonial p:first-child {
+.testimonials-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+.testimonials-item.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.testimonials-text {
   font-family: var(--f-serif);
-  font-size: clamp(20px, 2.4vw, 28px);
+  font-size: clamp(18px, 1.8vw, 24px);
   font-style: italic;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.82);
-  line-height: 1.85;
-  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
 
-.testimonial p:last-child {
-  font-size: 9px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
+.testimonials-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.testimonials-stars {
   color: var(--c-accent);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.testimonials-author {
+  font-size: 9px;
   font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  position: relative;
+  padding-left: 18px;
+}
+
+.testimonials-author::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 10px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.testimonials-nav {
+  flex-shrink: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.testimonials-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.testimonials-dot.is-active {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
 }
 
 /* ─────────────────────────────────────
@@ -1035,6 +1243,7 @@ footer {
 
 @media (max-width: 960px) {
   .items-container,
+  .items-container.grid-5,
   .items-container.grid-4,
   .items-container.grid-3 {
     grid-template-columns: repeat(2, 1fr);
@@ -1118,6 +1327,7 @@ footer {
     padding: 64px 20px;
   }
   .items-container,
+  .items-container.grid-5,
   .items-container.grid-4,
   .items-container.grid-3,
   .items-container.grid-2 {
@@ -1134,7 +1344,19 @@ footer {
     display: none;
   }
   .testimonials {
-    padding: 72px 24px;
+    padding: 40px 24px;
+  }
+  .testimonials-bar {
+    gap: 16px;
+  }
+  .testimonials-quote-mark {
+    font-size: 44px;
+  }
+  .testimonials-track {
+    min-height: 92px;
+  }
+  .testimonials-nav {
+    flex-direction: column;
   }
   .content {
     padding: 64px 20px;
@@ -1150,6 +1372,7 @@ footer {
 
 @media (max-width: 480px) {
   .items-container,
+  .items-container.grid-5,
   .items-container.grid-4,
   .items-container.grid-3,
   .items-container.grid-2 {

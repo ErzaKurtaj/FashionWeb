@@ -102,4 +102,12 @@ router.delete('/:itemId', async (req, res) => {
   }
 });
 
+/* Catches anything under /api/cart that didn't match a route above —
+   most notably DELETE /api/cart/ (empty id, e.g. from a stale client-side
+   `item.id`), which Express would otherwise fall through to its default
+   HTML 404 page instead of JSON. Keep this last. */
+router.use((req, res) => {
+  res.status(404).json({ error: 'Not found.' });
+});
+
 module.exports = router;

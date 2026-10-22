@@ -40,7 +40,7 @@
     }
 
     var data = await res.json().catch(function () { return {}; });
-    if (!res.ok) throw new Error(data.error || 'Cart request failed.');
+    if (!res.ok) throw new Error(data.error || ('Cart request failed (' + res.status + '). Please try again.'));
     return data;
   }
 
@@ -156,6 +156,10 @@
 
   function removeLine(item) {
     return withBusyGuard(async function () {
+      if (item == null || item.id == null) {
+        console.error('[cart] removeLine called with no item id:', item);
+        return;
+      }
       var data = await apiCall('/api/cart/' + item.id, { method: 'DELETE' });
       currentItems = data.items;
       renderCart();
@@ -209,4 +213,9 @@
       });
     }
   });
+
+  // Public API for other scripts on the page (e.g. the homepage's 3D
+  // capsule showcase) to add a real product to the real, server-backed
+  // cart — same function the "ADD TO CART" button above uses.
+  window.PassionisCart = { add: addToCart };
 })();

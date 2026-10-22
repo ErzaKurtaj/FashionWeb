@@ -540,10 +540,16 @@ nav ul li a.active::after {
 /* Grid layouts */
 .items-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 2px;
 }
 
+.items-container.grid-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+.items-container.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
 .items-container.grid-3 {
   grid-template-columns: repeat(3, 1fr);
 }
@@ -865,6 +871,8 @@ footer {
     padding: 40px 20px 60px;
   }
   .items-container,
+  .items-container.grid-5,
+  .items-container.grid-4,
   .items-container.grid-3,
   .items-container.grid-2 {
     grid-template-columns: repeat(2, 1fr);
@@ -883,6 +891,8 @@ footer {
 
 @media (max-width: 480px) {
   .items-container,
+  .items-container.grid-5,
+  .items-container.grid-4,
   .items-container.grid-3,
   .items-container.grid-2 {
     grid-template-columns: 1fr;

@@ -11,37 +11,37 @@
 
   /* ─── Data ────────────────────────────────────────────────────────── */
   const moodData = {
-    elegant: {
-      title: "Elegant",
-      caption: "Structured silhouettes, restrained contrast, intentional form.",
-      chips: ["Tailored", "Contrast", "Proportion"],
+    serene: {
+      title: "Serene",
+      caption: "Pale neutrals, flowing fabrics, easy shapes.",
+      chips: ["Pale neutrals", "Flowing", "Easy"],
       outfits: [
         "assets/images/elegant.png", "assets/images/elegant1.jpg", "assets/images/elegant2.jpg",
         "assets/images/elegant6.png", "assets/images/elegant5.png",
       ],
     },
-    calm: {
-      title: "Calm",
-      caption: "Soft textures, neutral tones, effortless balance.",
-      chips: ["Neutral", "Texture", "Flow"],
+    effortless: {
+      title: "Effortless",
+      caption: "Bright palettes, light fabrics, playful shapes.",
+      chips: ["Bright", "Light", "Playful"],
       outfits: [
         "assets/images/calm3.png", "assets/images/calm7.png", "assets/images/calm.png",
         "assets/images/calm2.png", "assets/images/calm4.png",
       ],
     },
-    confident: {
-      title: "Confident",
-      caption: "Defined lines, visual tension, composed strength.",
-      chips: ["Structure", "Volume", "Edge"],
+    bold: {
+      title: "Bold",
+      caption: "Strong contrast, sharp tailoring, statement pieces.",
+      chips: ["Contrast", "Tailored", "Statement"],
       outfits: [
         "assets/images/confy.png", "assets/images/draping.png", "assets/images/confident2.png",
         "assets/images/confident3.png", "assets/images/confident4.png",
       ],
     },
-    melancholic: {
-      title: "Melancholic",
-      caption: "Muted palettes, fluid drape, emotional quiet.",
-      chips: ["Drape", "Muted", "Layered"],
+    reflective: {
+      title: "Reflective",
+      caption: "Muted tones, layered looks, long lines.",
+      chips: ["Muted", "Layered", "Long lines"],
       outfits: [
         "assets/images/cozy.png", "assets/images/cozy3.png", "assets/images/cozy1.png",
         "assets/images/cozy4.png", "assets/images/cozy5.png",
@@ -49,15 +49,15 @@
     },
   };
 
-  // Dedicated "note" imagery only exists for Elegant (brown1-5); the other
+  // Dedicated "note" imagery only exists for Serene (brown1-5); the other
   // moods fall back to their own outfit set so the interpreter never shows
-  // a broken image. Drop in note-calm-*/note-confident-*/note-melancholic-*
+  // a broken image. Drop in note-effortless-*/note-bold-*/note-reflective-*
   // files later and list them here to give those moods their own pool.
   const noteData = {
-    elegant:     { images: ["assets/images/brown1.png", "assets/images/brown2.png", "assets/images/brown3.png", "assets/images/brown4.png", "assets/images/brown5.png"] },
-    calm:        { images: moodData.calm.outfits },
-    confident:   { images: moodData.confident.outfits },
-    melancholic: { images: moodData.melancholic.outfits },
+    serene:     { images: ["assets/images/brown1.png", "assets/images/brown2.png", "assets/images/brown3.png", "assets/images/brown4.png", "assets/images/brown5.png"] },
+    effortless: { images: moodData.effortless.outfits },
+    bold:       { images: moodData.bold.outfits },
+    reflective: { images: moodData.reflective.outfits },
   };
 
   /* ─── Breakpoints ────────────────────────────────────────────────── */
@@ -77,18 +77,24 @@
   let lastNoteEmotion = null;
 
   /* ─── DOM ────────────────────────────────────────────────────────── */
-  const buttons        = moodSection.querySelectorAll(".mood-btn");
+  const buttons         = moodSection.querySelectorAll(".mood-row");
+  const moodRows        = document.getElementById("moodRows");
+  const moodRight       = document.getElementById("moodRight");
+  const rightImages     = moodRight ? moodRight.querySelectorAll(".mood-right-images img") : [];
+  const rightCaptions   = moodRight ? moodRight.querySelectorAll(".mood-right-caption") : [];
+  const mobileThumb     = document.getElementById("moodMobileThumb");
+  const mobileThumbImgs = mobileThumb ? mobileThumb.querySelectorAll("img") : [];
+  const mobileThumbTitle = document.getElementById("moodMobileThumbTitle");
+  const mobileThumbDesc  = document.getElementById("moodMobileThumbDesc");
   const stateTitle     = document.getElementById("moodStateTitle");
   const stateCaption   = document.getElementById("moodStateCaption");
   const chipsEl        = document.getElementById("moodChips");
   const track          = document.getElementById("moodCarouselTrack");
-  const carouselEl     = document.querySelector(".mood-carousel");
-  const carouselStage  = document.querySelector(".mood-carousel-stage");
-  const prevBtn        = document.querySelector(".mood-carousel .prev");
-  const nextBtn        = document.querySelector(".mood-carousel .next");
+  const plateFrame     = document.querySelector(".mood-plate-frame");
+  const prevBtn        = document.querySelector(".mood-plate-nav .prev");
+  const nextBtn        = document.querySelector(".mood-plate-nav .next");
   const counterCur     = document.getElementById("moodCarouselCurrent");
   const counterTotal   = document.getElementById("moodCarouselTotal");
-  const indexWatermark = document.getElementById("moodIndexWatermark");
   const noteInput      = document.getElementById("moodNoteInput");
   const noteSubmit     = document.getElementById("moodNoteSubmit");
   const noteResponse   = document.getElementById("moodNoteResponse");
@@ -96,16 +102,85 @@
   const resultsSection = document.getElementById("mood-wardrobe");
 
   /* ─── Emotion select ─────────────────────────────────────────────── */
+  // Desktop (fine pointer): hovering a row reveals that mood on the right
+  // panel — pure exploration, nothing is committed yet. Clicking a row (any
+  // pointer type) commits it — same as before: populates the wardrobe
+  // carousel below and scrolls to it. On touch, there's no hover, so a tap
+  // does both at once (reveals the mobile thumbnail AND commits).
+  const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+  // Right panel: shows a photo at all times — auto-cycling through every
+  // mood on a timer when idle, "just color + the current photo drifting
+  // through," rather than sitting empty. Hovering a row pauses the cycle
+  // and locks the panel to that specific mood; leaving resumes it.
+  const AUTO_CYCLE_MOODS = ["serene", "effortless", "bold", "reflective"];
+  let autoCycleIndex = 0;
+  let autoCycleTimer = null;
+
+  function showRightPanel(mood) {
+    rightImages.forEach((img) => img.classList.toggle("is-shown", img.dataset.mood === mood));
+    rightCaptions.forEach((cap) => cap.classList.toggle("is-shown", cap.dataset.mood === mood));
+  }
+
+  function startAutoCycle() {
+    stopAutoCycle();
+    autoCycleTimer = setInterval(() => {
+      autoCycleIndex = (autoCycleIndex + 1) % AUTO_CYCLE_MOODS.length;
+      showRightPanel(AUTO_CYCLE_MOODS[autoCycleIndex]);
+    }, 3200);
+  }
+
+  function stopAutoCycle() {
+    clearInterval(autoCycleTimer);
+  }
+
+  function setActiveRow(mood, btn) {
+    buttons.forEach((b) => b.classList.toggle("is-active", b === btn));
+    moodRows?.classList.add("has-active");
+
+    showRightPanel(mood);
+
+    if (mobileThumb) {
+      mobileThumb.hidden = false;
+      mobileThumbImgs.forEach((img) => img.classList.toggle("is-shown", img.dataset.mood === mood));
+      if (mobileThumbTitle) mobileThumbTitle.textContent = btn.querySelector(".mood-row-title")?.textContent || "";
+      if (mobileThumbDesc)  mobileThumbDesc.textContent  = btn.dataset.descriptor || "";
+    }
+  }
+
+  function clearActiveRow() {
+    buttons.forEach((b) => b.classList.remove("is-active"));
+    moodRows?.classList.remove("has-active");
+  }
+
   buttons.forEach((btn) => {
-    btn.addEventListener("click", () => loadMood(btn.dataset.mood));
+    if (isFinePointer) {
+      btn.addEventListener("pointerenter", () => {
+        stopAutoCycle();
+        setActiveRow(btn.dataset.mood, btn);
+      });
+    }
+    btn.addEventListener("click", () => {
+      if (!isFinePointer) setActiveRow(btn.dataset.mood, btn);
+      loadMood(btn.dataset.mood);
+    });
   });
+
+  if (isFinePointer && moodRows) {
+    moodRows.addEventListener("pointerleave", () => {
+      clearActiveRow();
+      startAutoCycle();
+    });
+  }
+
+  if (moodRight) {
+    showRightPanel(AUTO_CYCLE_MOODS[autoCycleIndex]);
+    if (isFinePointer) startAutoCycle();
+  }
 
   function loadMood(mood) {
     const data = moodData[mood];
     if (!data) return;
-
-    buttons.forEach((b) => b.classList.remove("is-active"));
-    moodSection.querySelector(`[data-mood="${mood}"]`)?.classList.add("is-active");
 
     if (stateTitle)   stateTitle.textContent   = data.title;
     if (stateCaption) stateCaption.textContent = data.caption;
@@ -127,11 +202,13 @@
     }, 120);
   }
 
-  /* ─── Carousel ───────────────────────────────────────────────────── */
+  /* ─── Carousel ───────────────────────────────────────────────────
+     A single specimen plate that crossfades between looks — not a card
+     fan — so desktop and mobile share the exact same mechanics. ────── */
   function buildCarousel(outfits) {
     if (!track) return;
     track.innerHTML = "";
-    currentIndex = Math.floor(outfits.length / 2);
+    currentIndex = 0;
 
     outfits.forEach((src) => {
       const div = document.createElement("div");
@@ -140,7 +217,7 @@
       track.appendChild(div);
     });
 
-    if (counterTotal) counterTotal.textContent = outfits.length;
+    if (counterTotal) counterTotal.textContent = String(outfits.length).padStart(2, "0");
 
     track.classList.add("no-anim");
     updateCarousel();
@@ -150,29 +227,8 @@
   function updateCarousel() {
     if (!track) return;
     const looks = track.querySelectorAll(".mood-look");
-    const mobileMode = bp.mobile.matches;
-
-    carouselEl?.classList.toggle("is-slider", mobileMode);
-
-    if (mobileMode) {
-      const cardWidth = carouselStage ? carouselStage.offsetWidth : 0;
-      if (cardWidth > 0) track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-      looks.forEach((look, i) => { look.className = i === currentIndex ? "mood-look is-center" : "mood-look"; });
-    } else {
-      track.style.transform = "";
-      looks.forEach((look, i) => {
-        look.className = "mood-look";
-        const d = i - currentIndex;
-        if      (d === 0)  look.classList.add("is-center");
-        else if (d === -1) look.classList.add("is-left");
-        else if (d <= -2)  look.classList.add("is-far-left");
-        else if (d === 1)  look.classList.add("is-right");
-        else if (d >= 2)   look.classList.add("is-far-right");
-      });
-    }
-
-    if (counterCur) counterCur.textContent = currentIndex + 1;
-    if (indexWatermark) indexWatermark.textContent = String(currentIndex + 1).padStart(2, "0");
+    looks.forEach((look, i) => look.classList.toggle("is-center", i === currentIndex));
+    if (counterCur) counterCur.textContent = String(currentIndex + 1).padStart(2, "0");
   }
 
   function stepCarousel(dir) {
@@ -198,13 +254,13 @@
   });
 
   (function initSwipe() {
-    if (!carouselEl) return;
+    if (!plateFrame) return;
     let startX = 0, startY = 0;
-    carouselEl.addEventListener("touchstart", (e) => {
+    plateFrame.addEventListener("touchstart", (e) => {
       startX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
     }, { passive: true });
-    carouselEl.addEventListener("touchend", (e) => {
+    plateFrame.addEventListener("touchend", (e) => {
       const dx = e.changedTouches[0].clientX - startX;
       const dy = e.changedTouches[0].clientY - startY;
       if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
@@ -220,11 +276,11 @@
     const text = noteInput.value.toLowerCase().trim();
     if (!text) return;
 
-    let mood = "elegant";
-    if      (text.includes("soft")   || text.includes("neutral") || text.includes("linen"))  mood = "calm";
-    else if (text.includes("hoodie") || text.includes("layered") || text.includes("grey"))   mood = "melancholic";
-    else if (text.includes("bold")   || text.includes("contrast") || text.includes("red"))   mood = "confident";
-    else if (text.includes("black")  || text.includes("blazer")  || text.includes("sharp"))  mood = "elegant";
+    let mood = "serene";
+    if      (text.includes("soft")   || text.includes("neutral") || text.includes("linen"))  mood = "effortless";
+    else if (text.includes("hoodie") || text.includes("layered") || text.includes("grey"))   mood = "reflective";
+    else if (text.includes("bold")   || text.includes("contrast") || text.includes("red"))   mood = "bold";
+    else if (text.includes("black")  || text.includes("blazer")  || text.includes("sharp"))  mood = "serene";
 
     lastNoteEmotion = mood;
     if (noteResponse) noteResponse.textContent = `Reads as ${moodData[mood].title.toLowerCase()} — here's where that leads.`;
@@ -270,12 +326,11 @@
   }, { passive: true });
 
   /* ─── Init: load the first mood so the section isn't empty ──────── */
-  loadMoodSilently("elegant");
+  loadMoodSilently("serene");
 
   function loadMoodSilently(mood) {
     const data = moodData[mood];
     if (!data) return;
-    moodSection.querySelector(`[data-mood="${mood}"]`)?.classList.add("is-active");
     if (stateTitle)   stateTitle.textContent   = data.title;
     if (stateCaption) stateCaption.textContent = data.caption;
     if (chipsEl) {

@@ -153,6 +153,43 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  /* ── Testimonials: auto-rotating crossfade ────────────────────── */
+  const testimonialBar   = document.querySelector('.testimonials-bar');
+  const testimonialItems = document.querySelectorAll('.testimonials-item');
+  const testimonialDots  = document.querySelectorAll('.testimonials-dot');
+
+  if (testimonialBar && testimonialItems.length > 1) {
+    let activeIndex = 0;
+    let timer = null;
+
+    function showTestimonial(i) {
+      testimonialItems.forEach(function (el, idx) { el.classList.toggle('is-active', idx === i); });
+      testimonialDots.forEach(function (el, idx) { el.classList.toggle('is-active', idx === i); });
+      activeIndex = i;
+    }
+
+    function nextTestimonial() {
+      showTestimonial((activeIndex + 1) % testimonialItems.length);
+    }
+
+    function startAutoplay() {
+      clearInterval(timer);
+      timer = setInterval(nextTestimonial, 5000);
+    }
+
+    testimonialDots.forEach(function (dot, idx) {
+      dot.addEventListener('click', function () {
+        showTestimonial(idx);
+        startAutoplay();
+      });
+    });
+
+    testimonialBar.addEventListener('mouseenter', function () { clearInterval(timer); });
+    testimonialBar.addEventListener('mouseleave', startAutoplay);
+
+    startAutoplay();
+  }
+
   /* ── Grid view toggle (3 / 2 columns) ───────────────────────── */
   document.querySelectorAll('.grid-toggle').forEach(function (toggle) {
     const container = toggle.closest('.items-section').querySelector('.items-container');
@@ -164,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
           b.classList.remove('active');
         });
         btn.classList.add('active');
-        container.classList.remove('grid-2', 'grid-3');
+        container.classList.remove('grid-2', 'grid-3', 'grid-4', 'grid-5');
         container.classList.add('grid-' + btn.dataset.cols);
       });
     });
